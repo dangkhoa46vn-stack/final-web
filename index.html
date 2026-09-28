@@ -1,0 +1,2014 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Tiếng Nhật N5 & N4 - Trọn Bộ 50 Bài Minna no Nihongo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jp: {
+                            red: '#E63946',
+                            sakura: '#FFB7C5',
+                            dark: '#1D3557',
+                            light: '#F8F9FA',
+                            blue: '#457B9D',
+                            teal: '#A8DADC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-jp-red text-white p-2.5 rounded-xl shadow-md shadow-red-200 flex items-center justify-center">
+                        <i class="fa-solid font-bold text-xl fa-torii-gate"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold bg-gradient-to-r from-jp-red to-jp-blue bg-clip-text text-transparent">NihongoTouka</span>
+                        <span class="hidden sm:inline-block text-xs text-slate-500 font-medium ml-2 px-2.5 py-0.5 bg-slate-100 rounded-full border border-slate-200">Full 50 Bài Minna</span>
+                    </div>
+                </div>
+
+                <!-- Level Toggle -->
+                <div class="flex items-center">
+                    <div class="bg-slate-100 p-1 rounded-xl flex space-x-1 border border-slate-200">
+                        <button id="btn-level-n5" onclick="switchLevel('N5')" class="px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-jp-red text-white">
+                            Trình độ N5
+                        </button>
+                        <button id="btn-level-n4" onclick="switchLevel('N4')" class="px-5 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900">
+                            Trình độ N4
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow flex flex-col md:flex-row gap-6 w-full">
+
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm sticky top-22">
+                <div class="mb-4 px-3 py-2 bg-red-50 rounded-xl flex items-center justify-between border border-red-100">
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-wider">Đang chọn:</span>
+                    <span id="current-level-badge" class="px-2.5 py-1 bg-jp-red text-white font-extrabold text-xs rounded-md shadow-sm">N5 (Bài 1 - 25)</span>
+                </div>
+
+                <nav class="space-y-1.5">
+                    <button onclick="switchTab('vocab')" id="tab-btn-vocab" class="w-full flex items-center space-x-3 px-4 py-3 text-sm font-bold rounded-xl transition-all bg-jp-red text-white shadow-md shadow-red-100">
+                        <i class="fa-solid fa-table-cells text-base w-5"></i>
+                        <span>Từ Vựng</span>
+                    </button>
+                    <button onclick="switchTab('grammar')" id="tab-btn-grammar" class="w-full flex items-center space-x-3 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-xl transition-all">
+                        <i class="fa-solid fa-book-open text-base w-5"></i>
+                        <span>Ngữ Pháp</span>
+                    </button>
+                    <button onclick="switchTab('quiz')" id="tab-btn-quiz" class="w-full flex items-center space-x-3 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-xl transition-all">
+                        <i class="fa-solid fa-circle-question text-base w-5"></i>
+                        <span>Luyện Tập</span>
+                    </button>
+                </nav>
+
+                <!-- Lesson Selector -->
+                <div class="mt-6 pt-4 border-t border-slate-100">
+                    <label for="lesson-select" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Chọn Bài Học:</label>
+                    <select id="lesson-select" onchange="onLessonChange(this.value)" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-jp-red focus:border-transparent">
+                        <!-- Options generated dynamically -->
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 min-w-0">
+
+            <!-- SECTION 1: TỪ VỰNG EXCEL-STYLE TABLE -->
+            <section id="section-vocab" class="space-y-4">
+                <!-- Top Header & Controls -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col gap-4">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-2">
+                        <div>
+                            <h2 id="vocab-title" class="text-xl font-extrabold text-slate-800">Bài 1: Bảng Kiểm Tra Từ Vựng</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Nhập Hiragana, Kanji hoặc Romaji vào ô "Kiểm tra" và nhấn Enter để xem kết quả.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span id="vocab-stats-badge" class="px-3 py-1 bg-slate-100 text-slate-700 font-bold text-xs rounded-lg border border-slate-200">
+                                Tổng: <span id="total-words-count">0</span> từ
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                        <!-- Column Toggles -->
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="text-xs font-bold text-slate-400 mr-1">Ẩn cột:</span>
+                            <button onclick="toggleColumn('hiragana')" id="toggle-hiragana" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-800 text-white border-slate-800">
+                                Hiragana
+                            </button>
+                            <button onclick="toggleColumn('kanji')" id="toggle-kanji" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-800 text-white border-slate-800">
+                                Kanji / Hán Việt
+                            </button>
+                            <button onclick="toggleColumn('meaning')" id="toggle-meaning" class="px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-800 text-white border-slate-800">
+                                Ý Nghĩa
+                            </button>
+                        </div>
+
+                        <!-- Buttons for Actions -->
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button onclick="checkAllVocab()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-sm">
+                                <i class="fa-solid fa-spell-check mr-1"></i> Kiểm tra tất cả
+                            </button>
+                            <button onclick="showAllAnswers()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-all shadow-sm">
+                                <i class="fa-solid fa-eye mr-1"></i> Hiện đáp án
+                            </button>
+                            <button onclick="resetVocabCheck()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Làm lại
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Excel-style Table View -->
+                <div class="bg-white rounded-2xl border border-slate-300 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse font-sans text-sm">
+                            <thead>
+                                <tr class="bg-slate-700 text-white font-bold text-center border-b border-slate-500">
+                                    <th class="py-3 px-3 border-r border-slate-600 col-hiragana min-w-[120px]">Hiragana</th>
+                                    <th class="py-3 px-3 border-r border-slate-600 col-kanji min-w-[110px]">Kanji</th>
+                                    <th class="py-3 px-3 border-r border-slate-600 col-kanji min-w-[110px]">Hán Việt</th>
+                                    <th class="py-3 px-3 border-r border-slate-600 col-meaning min-w-[180px]">Ý Nghĩa</th>
+                                    <th class="py-3 px-3 border-r border-slate-600 min-w-[160px] bg-slate-800">Kiểm tra</th>
+                                    <th class="py-3 px-3 min-w-[140px] bg-slate-900">Check</th>
+                                </tr>
+                            </thead>
+                            <tbody id="excel-vocab-tbody" class="divide-y divide-slate-300 bg-slate-50">
+                                <!-- Dynamic content rendered from JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: NGỮ PHÁP -->
+            <section id="section-grammar" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                    <h2 id="grammar-title" class="text-xl font-bold text-slate-800">Bài 1: Ngữ Pháp Minna no Nihongo</h2>
+                    <p class="text-xs text-slate-500 mt-1">Danh sách các cấu trúc ngữ pháp trọng tâm và ví dụ minh họa</p>
+                </div>
+
+                <div id="grammar-list-container" class="space-y-4">
+                    <!-- Grammar Cards dynamically added here -->
+                </div>
+            </section>
+
+            <!-- SECTION 3: LUYỆN TẬP / TRẮC NGHIỆM -->
+            <section id="section-quiz" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h2 id="quiz-title" class="text-xl font-bold text-slate-800">Luyện Tập Bài 1</h2>
+                        <p class="text-xs text-slate-500 mt-1">Bài tập trắc nghiệm củng cố từ vựng & ngữ pháp</p>
+                    </div>
+                    <span id="quiz-score-badge" class="px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-200 text-xs font-bold rounded-xl">Điểm: <span id="quiz-score">0</span></span>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm max-w-2xl mx-auto">
+                    <div id="quiz-card-content">
+                        <!-- Dynamic Quiz Questions -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs text-slate-500 font-medium">© NihongoTouka - Trọn bộ 50 Bài Học Tiếng Nhật Minna no Nihongo N5 & N4.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FULL COMPREHENSIVE VOCABULARY DATABASE FOR LESSONS 1-50
+        const VOCAB_DATABASE = {
+            1: [
+                { jp: "わたし", kanji: "私", hanviet: "TƯ", romaji: "watashi", vi: "Tôi" },
+                { jp: "あなた", kanji: "", hanviet: "", romaji: "anata", vi: "Bạn (ngôi thứ 2 số ít)" },
+                { jp: "あのひと", kanji: "あの人", hanviet: "NHÂN", romaji: "ano hito", vi: "Người kia" },
+                { jp: "あのかた", kanji: "あの方", hanviet: "PHƯƠNG", romaji: "ano kata", vi: "Vị kia (lịch sự)" },
+                { jp: "さん", kanji: "", hanviet: "", romaji: "san", vi: "Hậu tố thêm vào sau tên người" },
+                { jp: "ちゃん", kanji: "", hanviet: "", romaji: "chan", vi: "Hậu tố thường thêm vào sau tên của bé gái" },
+                { jp: "じん", kanji: "人", hanviet: "NHÂN", romaji: "jin", vi: "Người nước nào đó" },
+                { jp: "せんせい", kanji: "先生", hanviet: "TIÊN SINH", romaji: "sensei", vi: "Thầy cô" },
+                { jp: "きょうし", kanji: "教師", hanviet: "GIÁO SƯ", romaji: "kyoushi", vi: "Giáo viên" },
+                { jp: "がくせい", kanji: "学生", hanviet: "HỌC SINH", romaji: "gakusei", vi: "Học sinh, sinh viên" },
+                { jp: "かいしゃいん", kanji: "会社員", hanviet: "HỘI XÃ VIÊN", romaji: "kaishain", vi: "Nhân viên công ty" },
+                { jp: "しゃいん", kanji: "社員", hanviet: "XÃ VIÊN", romaji: "shain", vi: "Nhân viên công ty (đi kèm với tên công ty)" },
+                { jp: "ぎんこういん", kanji: "銀行員", hanviet: "NGÂN HÀNG VIÊN", romaji: "ginkoin", vi: "Nhân viên ngân hàng" },
+                { jp: "いしゃ", kanji: "医者", hanviet: "Y GIẢ", romaji: "isha", vi: "Bác sĩ" },
+                { jp: "けんきゅうしゃ", kanji: "研究者", hanviet: "NGHIÊN CỨU GIẢ", romaji: "kenkyuusha", vi: "Nhà nghiên cứu" },
+                { jp: "だいがく", kanji: "大学", hanviet: "ĐẠI HỌC", romaji: "daigaku", vi: "Đại học, trường đại học" },
+                { jp: "びょういん", kanji: "病院", hanviet: "BỆNH VIỆN", romaji: "byouin", vi: "Bệnh viện" },
+                { jp: "だれ", kanji: "", hanviet: "", romaji: "dare", vi: "Ai" },
+                { jp: "どなた", kanji: "", hanviet: "", romaji: "donata", vi: "Vị nào (lịch sự của だれ)" },
+                { jp: "さい", kanji: "歳", hanviet: "TUẾ", romaji: "sai", vi: "Tuổi" },
+                { jp: "なんさい", kanji: "何歳", hanviet: "HÀ TUẾ", romaji: "nansai", vi: "Mấy tuổi, bao nhiêu tuổi" },
+                { jp: "おいくつ", kanji: "", hanviet: "", romaji: "oikutsu", vi: "Mấy tuổi (lịch sự của なんさい)" },
+                { jp: "はい", kanji: "", hanviet: "", romaji: "hai", vi: "Vâng, dạ, đúng" },
+                { jp: "いいえ", kanji: "", hanviet: "", romaji: "iie", vi: "Không" },
+                { jp: "はじめまして", kanji: "初めまして", hanviet: "SƠ", romaji: "hajimemashite", vi: "Rất hân hạnh được gặp bạn" },
+                { jp: "からきました", kanji: "から来ました", hanviet: "LAI", romaji: "kara kimashita", vi: "Đến từ" },
+                { jp: "どうぞよろしくおねがいします", kanji: "どうぞよろしくお願いします", hanviet: "NGUYỆN", romaji: "douzo yoroshiku onegaishimasu", vi: "Rất mong được sự giúp đỡ, rất vui được làm quen" },
+                { jp: "しつれいですが", kanji: "失礼ですが", hanviet: "THẤT LỄ", romaji: "shitsurei desu ga", vi: "Xin lỗi (dùng khi muốn hỏi thông tin)" },
+                { jp: "おなまえは", kanji: "お名前は", hanviet: "DANH TÍNH", romaji: "onamae wa", vi: "Tên bạn là gì" },
+                { jp: "こちらはさんです", kanji: "", hanviet: "", romaji: "kochira wa san desu", vi: "Đây là anh, chị, ông, bà" },
+                { jp: "アメリカ", kanji: "", hanviet: "", romaji: "amerika", vi: "Mỹ" },
+                { jp: "イギリス", kanji: "", hanviet: "", romaji: "igirisu", vi: "Anh" },
+                { jp: "インド", kanji: "", hanviet: "", romaji: "indo", vi: "Ấn Độ" },
+                { jp: "インドネシア", kanji: "", hanviet: "", romaji: "indoneshia", vi: "Indonesia" },
+                { jp: "かんこく", kanji: "韓国", hanviet: "HÀN QUỐC", romaji: "kankoku", vi: "Hàn Quốc" },
+                { jp: "タイ", kanji: "", hanviet: "", romaji: "tai", vi: "Thái Lan" },
+                { jp: "ちゅうごく", kanji: "中国", hanviet: "TRUNG QUỐC", romaji: "chuugoku", vi: "Trung Quốc" },
+                { jp: "ドイツ", kanji: "", hanviet: "", romaji: "doitsu", vi: "Đức" },
+                { jp: "にほん", kanji: "日本", hanviet: "NHẬT BẢN", romaji: "nihon", vi: "Nhật Bản" },
+                { jp: "ブラジル", kanji: "", hanviet: "", romaji: "burajiru", vi: "Braxin" },
+                { jp: "いち", kanji: "一", hanviet: "NHẤT", romaji: "ichi", vi: "1" },
+                { jp: "に", kanji: "二", hanviet: "NHỊ", romaji: "ni", vi: "2" },
+                { jp: "さん", kanji: "三", hanviet: "TAM", romaji: "san", vi: "3" },
+                { jp: "よん", kanji: "四", hanviet: "TỨ", romaji: "yon / shi", vi: "4" },
+                { jp: "ご", kanji: "五", hanviet: "NGŨ", romaji: "go", vi: "5" },
+                { jp: "ろく", kanji: "六", hanviet: "LỤC", romaji: "roku", vi: "6" },
+                { jp: "なな", kanji: "七", hanviet: "THẤT", romaji: "nana / shichi", vi: "7" },
+                { jp: "はち", kanji: "八", hanviet: "BÁT", romaji: "hachi", vi: "8" },
+                { jp: "きゅう", kanji: "九", hanviet: "CỬU", romaji: "kyuu / ku", vi: "9" },
+                { jp: "じゅう", kanji: "十", hanviet: "THẬP", romaji: "juu", vi: "10" },
+                { jp: "じゅういち", kanji: "十一", hanviet: "THẬP NHẤT", romaji: "juuichi", vi: "11" },
+                { jp: "じゅうに", kanji: "十二", hanviet: "THẬP NHỊ", romaji: "juuni", vi: "12" },
+                { jp: "にじゅう", kanji: "二十", hanviet: "NHỊ THẬP", romaji: "nijuu", vi: "20" },
+                { jp: "にじゅういち", kanji: "二十一", hanviet: "NHỊ THẬP NHẤT", romaji: "nijuuichi", vi: "21" }
+            ],
+            2: [
+                { jp: "これ", kanji: "", hanviet: "", romaji: "kore", vi: "Cái này" },
+                { jp: "それ", kanji: "", hanviet: "", romaji: "sore", vi: "Cái đó" },
+                { jp: "あれ", kanji: "", hanviet: "", romaji: "are", vi: "Cái kia" },
+                { jp: "この", kanji: "", hanviet: "", romaji: "kono", vi: "Cái này" },
+                { jp: "その", kanji: "", hanviet: "", romaji: "sono", vi: "Cái đó" },
+                { jp: "あの", kanji: "", hanviet: "", romaji: "ano", vi: "Cái kia" },
+                { jp: "ほん", kanji: "本", hanviet: "BẢN", romaji: "hon", vi: "Sách" },
+                { jp: "じしょ", kanji: "辞書", hanviet: "TỪ THƯ", romaji: "jisho", vi: "Từ điển" },
+                { jp: "ざっし", kanji: "雑誌", hanviet: "TẠP CHÍ", romaji: "zasshi", vi: "Tạp chí" },
+                { jp: "しんぶん", kanji: "新聞", hanviet: "TÂN VĂN", romaji: "shinbun", vi: "Báo" },
+                { jp: "ノート", kanji: "", hanviet: "", romaji: "nooto", vi: "Vở" },
+                { jp: "てちょう", kanji: "手帳", hanviet: "THỦ TRƯỜNG", romaji: "techou", vi: "Sổ tay" },
+                { jp: "めいし", kanji: "名刺", hanviet: "DANH THÍCH", romaji: "meishi", vi: "Danh thiếp" },
+                { jp: "カード", kanji: "", hanviet: "", romaji: "kaado", vi: "Thẻ" },
+                { jp: "えんぴつ", kanji: "鉛筆", hanviet: "DUYÊN BÚT", romaji: "enpitsu", vi: "Bút chì" },
+                { jp: "ボールペン", kanji: "", hanviet: "", romaji: "boorupen", vi: "Bút bi" },
+                { jp: "シャープペンシル", kanji: "", hanviet: "", romaji: "shaapupenshiru", vi: "Bút chì kim" },
+                { jp: "かぎ", kanji: "鍵", hanviet: "KIỆN", romaji: "kagi", vi: "Chìa khóa" },
+                { jp: "とけい", kanji: "時計", hanviet: "THỜI KẾ", romaji: "tokei", vi: "Đồng hồ" },
+                { jp: "かさ", kanji: "傘", hanviet: "TÁN", romaji: "kasa", vi: "Cái ô" },
+                { jp: "かばん", kanji: "鞄", hanviet: "BẠC", romaji: "kaban", vi: "Cặp, túi xách" },
+                { jp: "テレビ", kanji: "", hanviet: "", romaji: "terebi", vi: "Tivi" },
+                { jp: "ラジオ", kanji: "", hanviet: "", romaji: "rajio", vi: "Đài radio" },
+                { jp: "カメラ", kanji: "", hanviet: "", romaji: "kamera", vi: "Máy ảnh" },
+                { jp: "コンピューター", kanji: "", hanviet: "", romaji: "konpyuutaa", vi: "Máy vi tính" },
+                { jp: "くるま", kanji: "車", hanviet: "XA", romaji: "kuruma", vi: "Ô tô" },
+                { jp: "つくえ", kanji: "机", hanviet: "KỶ", romaji: "tsukue", vi: "Bàn" },
+                { jp: "いす", kanji: "椅子", hanviet: "Y TỬ", romaji: "isu", vi: "Ghế" },
+                { jp: "チョコレート", kanji: "", hanviet: "", romaji: "chokoreeto", vi: "Sô cô la" },
+                { jp: "コーヒー", kanji: "", hanviet: "", romaji: "koohii", vi: "Cà phê" },
+                { jp: "おみやげ", kanji: "お土産", hanviet: "THỔ SẢN", romaji: "omiyage", vi: "Quà lưu niệm" },
+                { jp: "えいご", kanji: "英語", hanviet: "ANH NGỮ", romaji: "eigo", vi: "Tiếng Anh" },
+                { jp: "にほんご", kanji: "日本語", hanviet: "NHẬT BẢN NGỮ", romaji: "nihongo", vi: "Tiếng Nhật" },
+                { jp: "ご", kanji: "語", hanviet: "NGỮ", romaji: "go", vi: "Tiếng" },
+                { jp: "なん", kanji: "何", hanviet: "HÀ", romaji: "nan", vi: "Cái gì" },
+                { jp: "そう", kanji: "", hanviet: "", romaji: "sou", vi: "Đúng, phải" },
+                { jp: "あのう", kanji: "", hanviet: "", romaji: "anou", vi: "À, ờ (Ngập ngừng, do dự)" },
+                { jp: "えっ", kanji: "", hanviet: "", romaji: "e", vi: "Cái gì cơ (Thể hiện ngạc nhiên)" },
+                { jp: "どうぞ", kanji: "", hanviet: "", romaji: "douzo", vi: "Xin mời" },
+                { jp: "どうもありがとうございます", kanji: "", hanviet: "", romaji: "doumo arigatou gozaimasu", vi: "Cảm ơn" },
+                { jp: "そうですか", kanji: "", hanviet: "", romaji: "sou desu ka", vi: "Vậy à, thế à" },
+                { jp: "ちがいます", kanji: "違います", hanviet: "VI", romaji: "chigaimasu", vi: "Không phải, sai rồi" },
+                { jp: "あ", kanji: "", hanviet: "", romaji: "a", vi: "A (Dùng khi nhận ra điều gì đó)" },
+                { jp: "これからおせわになります", kanji: "これからお世話になります", hanviet: "THẾ THOẠI", romaji: "kore kara osewa ni narimasu", vi: "Từ nay tôi rất mong sự giúp đỡ của anh chị" },
+                { jp: "こちらこそどうぞよろしくおねがいします", kanji: "こちらこそどうぞよろしくお願いします", hanviet: "NGUYỆN", romaji: "kochira koso douzo yoroshiku onegaishimasu", vi: "Tôi cũng mong được quan tâm, giúp đỡ" }
+            ],
+            3: [
+                { jp: "ここ", kanji: "", hanviet: "", vi: "Chỗ này, đây" },
+                { jp: "そこ", kanji: "", hanviet: "", vi: "Chỗ đó, đó" },
+                { jp: "あそこ", kanji: "", hanviet: "", vi: "Chỗ kia, kia" },
+                { jp: "どこ", kanji: "", hanviet: "", vi: "Chỗ nào, đâu" },
+                { jp: "こちら", kanji: "", hanviet: "", vi: "Phía này, đằng này, chỗ này, đây" },
+                { jp: "そちら", kanji: "", hanviet: "", vi: "Phía đó, đằng đó, chỗ đó, đó" },
+                { jp: "あちら", kanji: "", hanviet: "", vi: "Phía kia, đằng kia, chỗ kia, kia" },
+                { jp: "どちら", kanji: "", hanviet: "", vi: "Phía nào, đằng nào, chỗ nào, đâu" },
+                { jp: "きょうしつ", kanji: "教室", hanviet: "GIÁO THẤT", vi: "Lớp học, phòng học" },
+                { jp: "しょくどう", kanji: "食堂", hanviet: "THỰC ĐƯỜNG", vi: "Nhà ăn" },
+                { jp: "じむしょ", kanji: "事務所", hanviet: "SỰ VỤ SỞ", vi: "Văn phòng" },
+                { jp: "かいぎしつ", kanji: "会議室", hanviet: "HỘI NGHỊ THẤT", vi: "Phòng họp" },
+                { jp: "うけつけ", kanji: "受付", hanviet: "THỤ PHÓ", vi: "Bộ phận tiếp tân, phòng thường trực" },
+                { jp: "ロビー", kanji: "", hanviet: "", vi: "Hành lang, đại sảnh" },
+                { jp: "へや", kanji: "部屋", hanviet: "BỘ ỐC", vi: "Căn phòng" },
+                { jp: "トイレ", kanji: "", hanviet: "", vi: "Nhà vệ sinh, toa-lét" },
+                { jp: "おてあらい", kanji: "お手洗い", hanviet: "THỦ TẨY", vi: "Phòng vệ sinh" },
+                { jp: "かいだん", kanji: "階段", hanviet: "GIAI ĐOẠN", vi: "Cầu thang" },
+                { jp: "エレベーター", kanji: "", hanviet: "", vi: "Thang máy" },
+                { jp: "エスカレーター", kanji: "", hanviet: "", vi: "Thang cuốn" },
+                { jp: "じどうはんばいき", kanji: "自動販売機", hanviet: "TỰ ĐỘNG PHIẾN MẠI CƠ", vi: "Máy bán hàng tự động" },
+                { jp: "でんわ", kanji: "電話", hanviet: "ĐIỆN THOẠI", vi: "Điện thoại" },
+                { jp: "おくに", kanji: "お国", hanviet: "QUỐC", vi: "Đất nước" },
+                { jp: "かいしゃ", kanji: "会社", hanviet: "HỘI XÃ", vi: "Công ty" },
+                { jp: "うち", kanji: "", hanviet: "", vi: "Nhà" },
+                { jp: "くつ", kanji: "靴", hanviet: "NGOA", vi: "Giầy" },
+                { jp: "ネクタイ", kanji: "", hanviet: "", vi: "Cà vạt" },
+                { jp: "ワイン", kanji: "", hanviet: "", vi: "Rượu vang" },
+                { jp: "うりば", kanji: "売り場", hanviet: "MẠI TRƯỜNG", vi: "Quầy bán" },
+                { jp: "ちか", kanji: "地下", hanviet: "ĐỊA HẠ", vi: "Tầng hầm" },
+                { jp: "いっかい", kanji: "一階", hanviet: "GIAI", vi: "Tầng thứ 1" },
+                { jp: "なんがい", kanji: "何階", hanviet: "HÀ GIAI", vi: "Tầng mấy" },
+                { jp: "えん", kanji: "円", hanviet: "VIÊN", vi: "Yên" },
+                { jp: "いくら", kanji: "", hanviet: "", vi: "Bao nhiêu tiền" },
+                { jp: "ひゃく", kanji: "百", hanviet: "BÁCH", vi: "Trăm" },
+                { jp: "せん", kanji: "千", hanviet: "THIÊN", vi: "Nghìn" },
+                { jp: "まん", kanji: "万", hanviet: "VẠN", vi: "Mười nghìn, vạn" },
+                { jp: "すみません", kanji: "", hanviet: "", vi: "Xin lỗi" },
+                { jp: "どうも", kanji: "", hanviet: "", vi: "Cám ơn" },
+                { jp: "いらっしゃいませ", kanji: "", hanviet: "", vi: "Chào mừng, Hoan nghênh" },
+                { jp: "みせてください", kanji: "見せてください", hanviet: "KIẾN", vi: "Cho tôi xem" },
+                { jp: "じゃ", kanji: "", hanviet: "", vi: "Thế thì, vậy thì" },
+                { jp: "ください", kanji: "", hanviet: "", vi: "Cho tôi" },
+                { jp: "イタリア", kanji: "", hanviet: "", vi: "Ý" },
+                { jp: "スイス", kanji: "", hanviet: "", vi: "Thụy Sĩ" },
+                { jp: "フランス", kanji: "", hanviet: "", vi: "Pháp" },
+                { jp: "ジャカルタ", kanji: "", hanviet: "", vi: "Jakarta" },
+                { jp: "バンコク", kanji: "", hanviet: "", vi: "Bangkok" },
+                { jp: "ベルリン", kanji: "", hanviet: "", vi: "Berlin" },
+                { jp: "しんおおさか", kanji: "新大阪", hanviet: "TÂN ĐẠI PHẢN", vi: "Tên một nhà ga ở Osaka" }
+            ],
+            4: [
+                { jp: "おきます", kanji: "起きます", hanviet: "KHỞI", vi: "Dậy, thức dậy" },
+                { jp: "ねます", kanji: "寝ます", hanviet: "TẨM", vi: "Ngủ, đi ngủ" },
+                { jp: "はたらきます", kanji: "働きます", hanviet: "ĐỘNG", vi: "Làm việc" },
+                { jp: "やすみます", kanji: "休みます", hanviet: "HƯU", vi: "Nghỉ, nghỉ ngơi" },
+                { jp: "べんきょうします", kanji: "勉強します", hanviet: "MIỄN CƯỜNG", vi: "Học" },
+                { jp: "おわります", kanji: "終わります", hanviet: "CHUNG", vi: "Hết, kết thúc, xong" },
+                { jp: "デパート", kanji: "", hanviet: "", vi: "Trung tâm thương mại" },
+                { jp: "ぎんこう", kanji: "銀行", hanviet: "NGÂN HÀNH", vi: "Ngân hàng" },
+                { jp: "ゆうびんきょく", kanji: "郵便局", hanviet: "BƯU TIỆN CỤC", vi: "Bưu điện" },
+                { jp: "としょかん", kanji: "図書館", hanviet: "ĐỒ THƯ QUÁN", vi: "Thư viện" },
+                { jp: "びじゅつかん", kanji: "美術館", hanviet: "MỸ THUẬT QUÁN", vi: "Bảo tàng mỹ thuật" },
+                { jp: "いま", kanji: "今", hanviet: "KIM", vi: "Bây giờ" },
+                { jp: "じ", kanji: "時", hanviet: "THỜI", vi: "Giờ" },
+                { jp: "ふん", kanji: "分", hanviet: "PHÂN", vi: "Phút" },
+                { jp: "はん", kanji: "半", hanviet: "BÁN", vi: "Rưỡi, nửa" },
+                { jp: "なんじ", kanji: "何時", hanviet: "HÀ THỜI", vi: "Mấy giờ" },
+                { jp: "なんぷん", kanji: "何分", hanviet: "HÀ PHÂN", vi: "Mấy phút" },
+                { jp: "ごぜん", kanji: "午前", hanviet: "NGỌ TIỀN", vi: "Sáng, trước 12 giờ trưa" },
+                { jp: "ごご", kanji: "午後", hanviet: "NGỌ HẬU", vi: "Chiều, sau 12 giờ trưa" },
+                { jp: "あさ", kanji: "朝", hanviet: "TRIỀU", vi: "Buổi sáng, sáng" },
+                { jp: "ひる", kanji: "昼", hanviet: "TRÚ", vi: "Buổi trưa, trưa" },
+                { jp: "ばん", kanji: "晚", hanviet: "VÃN", vi: "Buổi tối" },
+                { jp: "よる", kanji: "夜", hanviet: "DẠ", vi: "Buổi tối, đêm" },
+                { jp: "おととい", kanji: "", hanviet: "", vi: "Hôm kia" },
+                { jp: "きのう", kanji: "", hanviet: "", vi: "Hôm qua" },
+                { jp: "きょう", kanji: "", hanviet: "", vi: "Hôm nay" },
+                { jp: "あした", kanji: "", hanviet: "", vi: "Ngày mai" },
+                { jp: "あさって", kanji: "", hanviet: "", vi: "Ngày kia" },
+                { jp: "けさ", kanji: "", hanviet: "", vi: "Sáng nay" },
+                { jp: "こんばん", kanji: "今晚", hanviet: "KIM VÃN", vi: "Tối nay" },
+                { jp: "やすみ", kanji: "休み", hanviet: "HƯU", vi: "Nghỉ, nghỉ phép, ngày nghỉ" },
+                { jp: "ひるやすみ", kanji: "昼休み", hanviet: "TRÚ HƯU", vi: "Nghỉ trưa" },
+                { jp: "しけん", kanji: "試験", hanviet: "THÍ NGHIỆM", vi: "Kì thi, bài thi, bài kiểm tra" },
+                { jp: "かいぎ", kanji: "会議", hanviet: "HỘI NGHỊ", vi: "Cuộc họp" },
+                { jp: "えいが", kanji: "映画", hanviet: "ÁNH HỌA", vi: "Phim, điện ảnh" },
+                { jp: "まいあさ", kanji: "每朝", hanviet: "MỖI TRIỀU", vi: "Hàng sáng, mỗi sáng" },
+                { jp: "まいばん", kanji: "每晚", hanviet: "MỖI VÃN", vi: "Hàng tối, mỗi tối" },
+                { jp: "まいにち", kanji: "毎日", hanviet: "MỖI NHẬT", vi: "Hàng ngày, mỗi ngày" },
+                { jp: "げつようび", kanji: "月曜日", hanviet: "NGUYỆT DIỆU NHẬT", vi: "Thứ hai" },
+                { jp: "かようび", kanji: "火曜日", hanviet: "HỎA DIỆU NHẬT", vi: "Thứ ba" },
+                { jp: "すいようび", kanji: "水曜日", hanviet: "THỦY DIỆU NHẬT", vi: "Thứ tư" },
+                { jp: "もくようび", kanji: "木曜日", hanviet: "MỘC DIỆU NHẬT", vi: "Thứ năm" },
+                { jp: "きんようび", kanji: "金曜日", hanviet: "KIM DIỆU NHẬT", vi: "Thứ sáu" },
+                { jp: "どようび", kanji: "土曜日", hanviet: "THỔ DIỆU NHẬT", vi: "Thứ bảy" },
+                { jp: "にちようび", kanji: "日曜日", hanviet: "NHẬT DIỆU NHẬT", vi: "Chủ nhật" },
+                { jp: "なんようび", kanji: "何曜日", hanviet: "HÀ DIỆU NHẬT", vi: "Thứ mấy" },
+                { jp: "から", kanji: "", hanviet: "", vi: "Từ" },
+                { jp: "まで", kanji: "", hanviet: "", vi: "Đến" },
+                { jp: "と", kanji: "", hanviet: "", vi: "Và" },
+                { jp: "たいへんですね", kanji: "大変ですね", hanviet: "ĐẠI BIẾN", vi: "Anh chị vất vả quá" },
+                { jp: "ばんごう", kanji: "番号", hanviet: "PHIÊN HIỆU", vi: "Số" },
+                { jp: "なんばん", kanji: "何番", hanviet: "HÀ PHIÊN", vi: "Số bao nhiêu, số mấy" },
+                { jp: "そちら", kanji: "", hanviet: "", vi: "Phía anh chị" },
+                { jp: "ニューヨーク", kanji: "", hanviet: "", vi: "New York" },
+                { jp: "ペキン", kanji: "", hanviet: "", vi: "Bắc Kinh" },
+                { jp: "ロサンゼルス", kanji: "", hanviet: "", vi: "Los Angeles" },
+                { jp: "ロンドン", kanji: "", hanviet: "", vi: "Luân Đôn" }
+            ],
+            5: [
+                { jp: "いきます", kanji: "行きます", hanviet: "HÀNH", vi: "Đi" },
+                { jp: "きます", kanji: "来ます", hanviet: "LAI", vi: "Đến" },
+                { jp: "かえります", kanji: "帰ります", hanviet: "QUY", vi: "Về" },
+                { jp: "がっこう", kanji: "学校", hanviet: "HỌC HIỆU", vi: "Trường học" },
+                { jp: "スーパー", kanji: "", hanviet: "", vi: "Siêu thị" },
+                { jp: "えき", kanji: "駅", hanviet: "DỊCH", vi: "Ga, nhà ga" },
+                { jp: "ひこうき", kanji: "飛行機", hanviet: "PHI HÀNH CƠ", vi: "Máy bay" },
+                { jp: "ふね", kanji: "船", hanviet: "THUYỀN", vi: "Thuyền, tàu thủy" },
+                { jp: "でんしゃ", kanji: "電車", hanviet: "ĐIỆN XA", vi: "Tàu điện" },
+                { jp: "ちかてつ", kanji: "地下鉄", hanviet: "ĐỊA HẠ THIẾT", vi: "Tàu điện ngầm" },
+                { jp: "しんかんせん", kanji: "新幹線", hanviet: "TÂN CÁN TUYẾN", vi: "Tàu Shinkansen" },
+                { jp: "バス", kanji: "", hanviet: "", vi: "Xe buýt" },
+                { jp: "タクシー", kanji: "", hanviet: "", vi: "Tắc-xi" },
+                { jp: "じてんしゃ", kanji: "自転車", hanviet: "TỰ CHUYỂN XA", vi: "Xe đạp" },
+                { jp: "あるいて", kanji: "歩いて", hanviet: "BỘ", vi: "Đi bộ" },
+                { jp: "ひと", kanji: "人", hanviet: "NHÂN", vi: "Người" },
+                { jp: "ともだち", kanji: "友達", hanviet: "HỮU ĐẠT", vi: "Bạn, bạn bè" },
+                { jp: "かれ", kanji: "彼", hanviet: "BỈ", vi: "Anh ấy, bạn trai" },
+                { jp: "かのじょ", kanji: "彼女", hanviet: "BỈ NỮ", vi: "Chị ấy, bạn gái" },
+                { jp: "かぞく", kanji: "家族", hanviet: "GIA TỘC", vi: "Gia đình" },
+                { jp: "ひとりで", kanji: "一人で", hanviet: "NHẤT NHÂN", vi: "Một mình" },
+                { jp: "せんしゅう", kanji: "先週", hanviet: "TIÊN CHU", vi: "Tuần trước" },
+                { jp: "こんしゅう", kanji: "今週", hanviet: "KIM CHU", vi: "Tuần này" },
+                { jp: "らいしゅう", kanji: "来週", hanviet: "LAI CHU", vi: "Tuần sau" },
+                { jp: "せんげつ", kanji: "先月", hanviet: "TIÊN NGUYỆT", vi: "Tháng trước" },
+                { jp: "こんげつ", kanji: "今月", hanviet: "KIM NGUYỆT", vi: "Tháng này" },
+                { jp: "らいげつ", kanji: "来月", hanviet: "LAI NGUYỆT", vi: "Tháng sau" },
+                { jp: "きょねん", kanji: "去年", hanviet: "KHỬ NIÊN", vi: "Năm ngoái" },
+                { jp: "ことし", kanji: "今年", hanviet: "KIM NIÊN", vi: "Năm nay" },
+                { jp: "らいねん", kanji: "来年", hanviet: "LAI NIÊN", vi: "Năm sau" },
+                { jp: "ねん", kanji: "年", hanviet: "NIÊN", vi: "Năm" },
+                { jp: "なんねん", kanji: "何年", hanviet: "HÀ NIÊN", vi: "Năm nào" },
+                { jp: "がつ", kanji: "月", hanviet: "NGUYỆT", vi: "Tháng" },
+                { jp: "なんがつ", kanji: "何月", hanviet: "HÀ NGUYỆT", vi: "Tháng mấy" },
+                { jp: "ついたち", kanji: "1日", hanviet: "NHẬT", vi: "Ngày mồng 1" },
+                { jp: "ふつか", kanji: "2日", hanviet: "", vi: "Ngày mồng 2" },
+                { jp: "みっか", kanji: "3日", hanviet: "", vi: "Ngày mồng 3" },
+                { jp: "よっか", kanji: "4日", hanviet: "", vi: "Ngày mồng 4" },
+                { jp: "いつか", kanji: "5日", hanviet: "", vi: "Ngày mồng 5" },
+                { jp: "むいか", kanji: "6日", hanviet: "", vi: "Ngày mồng 6" },
+                { jp: "なのか", kanji: "7日", hanviet: "", vi: "Ngày mồng 7" },
+                { jp: "ようか", kanji: "8日", hanviet: "", vi: "Ngày mồng 8" },
+                { jp: "ここのか", kanji: "9日", hanviet: "", vi: "Ngày mồng 9" },
+                { jp: "とおか", kanji: "10日", hanviet: "", vi: "Ngày mồng 10" },
+                { jp: "じゅうよっか", kanji: "14日", hanviet: "", vi: "Ngày 14" },
+                { jp: "はつか", kanji: "20日", hanviet: "", vi: "Ngày 20" },
+                { jp: "にじゅうよっか", kanji: "24日", hanviet: "", vi: "Ngày 24" },
+                { jp: "にち", kanji: "日", hanviet: "", vi: "Ngày" },
+                { jp: "なんにち", kanji: "何日", hanviet: "HÀ NHẬT", vi: "Ngày mấy, ngày bao nhiêu" },
+                { jp: "いつ", kanji: "", hanviet: "", vi: "Bao giờ, khi nào" },
+                { jp: "たんじょうび", kanji: "誕生日", hanviet: "ĐẢN SINH NHẬT", vi: "Sinh nhật" },
+                { jp: "そうですね", kanji: "", hanviet: "", vi: "Ừ, đúng thế nhỉ" },
+                { jp: "どうもありがとうございました", kanji: "", hanviet: "", vi: "Cảm ơn rất nhiều" },
+                { jp: "どういたしまして", kanji: "", hanviet: "", vi: "Không có gì" },
+                { jp: "ばんせん", kanji: "番線", hanviet: "PHIÊN TUYẾN", vi: "Sân ga số" },
+                { jp: "つぎの", kanji: "次の", hanviet: "THỨ", vi: "Tiếp theo" },
+                { jp: "ふつう", kanji: "普通", hanviet: "PHỔ THÔNG", vi: "Tàu thường" },
+                { jp: "きゅうこう", kanji: "急行", hanviet: "CẤP HÀNH", vi: "Tàu tốc hành" },
+                { jp: "とっきゅう", kanji: "特急", hanviet: "ĐẶC CẤP", vi: "Tàu tốc hành đặc biệt" }
+
+            ],
+            6: [
+                { jp: "たべます", kanji: "食べます", hanviet: "THỰC", vi: "Ăn" },
+                { jp: "のみます", kanji: "飲みます", hanviet: "ẨM", vi: "Uống" },
+                { jp: "すいます", kanji: "たばこを吸います", hanviet: "HẤP", vi: "Hút" },
+                { jp: "みます", kanji: "見ます", hanviet: "KIẾN", vi: "Xem, nhìn, trông" },
+                { jp: "ききます", kanji: "聞きます", hanviet: "VĂN", vi: "Nghe" },
+                { jp: "よみます", kanji: "読みます", hanviet: "ĐỘC", vi: "Đọc" },
+                { jp: "かきます", kanji: "書きます", hanviet: "THƯ", vi: "Viết, vẽ" },
+                { jp: "かいます", kanji: "買います", hanviet: "MÃI", vi: "Mua" },
+                { jp: "とります", kanji: "写真を撮ります", hanviet: "TẢ CHÂN TOÁT", vi: "Chụp" },
+                { jp: "します", kanji: "", hanviet: "", vi: "Làm" },
+                { jp: "あいます", kanji: "友達に会います", hanviet: "HỮU ĐẠT HỘI", vi: "Gặp bạn" },
+                { jp: "ごはん", kanji: "", hanviet: "", vi: "Cơm, bữa ăn" },
+                { jp: "あさごはん", kanji: "朝ごはん", hanviet: "TRIỀU", vi: "Cơm sáng, bữa sáng" },
+                { jp: "ひるごはん", kanji: "昼ごはん", hanviet: "TRÚ", vi: "Cơm trưa, bữa trưa" },
+                { jp: "ばんごはん", kanji: "晩ごはん", hanviet: "VÃN", vi: "Cơm tối, bữa tối" },
+                { jp: "パン", kanji: "", hanviet: "", vi: "Bánh mì" },
+                { jp: "たまご", kanji: "卵", hanviet: "NOÃN", vi: "Trứng" },
+                { jp: "にく", kanji: "肉", hanviet: "NHỤC", vi: "Thịt" },
+                { jp: "さかな", kanji: "魚", hanviet: "NGƯ", vi: "Cá" },
+                { jp: "やさい", kanji: "野菜", hanviet: "DÃ THÁI", vi: "Rau" },
+                { jp: "くだもの", kanji: "果物", hanviet: "QUẢ VẬT", vi: "Hoa quả, trái cây" },
+                { jp: "みず", kanji: "水", hanviet: "THỦY", vi: "Nước" },
+                { jp: "おちゃ", kanji: "お茶", hanviet: "TRÀ", vi: "Trà (nói chung)" },
+                { jp: "こうちゃ", kanji: "紅茶", hanviet: "HỒNG TRÀ", vi: "Trà đen" },
+                { jp: "ぎゅうにゅう", kanji: "牛乳", hanviet: "NGƯU NHŨ", vi: "Sữa bò" },
+                { jp: "ミルク", kanji: "", hanviet: "", vi: "Sữa" },
+                { jp: "ジュース", kanji: "", hanviet: "", vi: "Nước hoa quả" },
+                { jp: "ビール", kanji: "", hanviet: "", vi: "Bia" },
+                { jp: "おさけ", kanji: "お酒", hanviet: "TỬU", vi: "Rượu, rượu gạo Nhật Bản" },
+                { jp: "たばこ", kanji: "", hanviet: "", vi: "Thuốc lá" },
+                { jp: "てがみ", kanji: "手紙", hanviet: "THỦ CHỈ", vi: "Thư" },
+                { jp: "レポート", kanji: "", hanviet: "", vi: "Báo cáo" },
+                { jp: "しゃしん", kanji: "写真", hanviet: "TẢ CHÂN", vi: "Ảnh" },
+                { jp: "ビデオ", kanji: "", hanviet: "", vi: "Video, băng video" },
+                { jp: "みせ", kanji: "店", hanviet: "ĐIỂM", vi: "Cửa hàng, tiệm" },
+                { jp: "にわ", kanji: "庭", hanviet: "ĐÌNH", vi: "Vườn, sân" },
+                { jp: "しゅくだい", kanji: "宿題", hanviet: "TÚC ĐỀ", vi: "Bài tập về nhà" },
+                { jp: "テニス", kanji: "", hanviet: "", vi: "Quần vợt" },
+                { jp: "サッカー", kanji: "", hanviet: "", vi: "Bóng đá" },
+                { jp: "はなみ", kanji: "お花見", hanviet: "HOA KIẾN", vi: "Việc ngắm hoa anh đào" },
+                { jp: "なに", kanji: "何", hanviet: "HÀ", vi: "Cái gì, gì" },
+                { jp: "いっしょに", kanji: "", hanviet: "", vi: "Cùng, cùng nhau" },
+                { jp: "ちょっと", kanji: "", hanviet: "", vi: "Một chút" },
+                { jp: "いつも", kanji: "", hanviet: "", vi: "Luôn luôn, lúc nào cũng" },
+                { jp: "ときどき", kanji: "時々", hanviet: "THỜI", vi: "Thỉnh thoảng" },
+                { jp: "それから", kanji: "", hanviet: "", vi: "Sau đó, tiếp theo" },
+                { jp: "ええ", kanji: "", hanviet: "", vi: "Vâng, được" },
+                { jp: "いいですね", kanji: "", hanviet: "", vi: "Được đấy nhỉ" },
+                { jp: "わかりました", kanji: "", hanviet: "", vi: "Tôi hiểu rồi ạ" },
+                { jp: "なんですか", kanji: "何ですか", hanviet: "HÀ", vi: "Là cái gì vậy? / Cái gì thế?" },
+                { jp: "じゃまたあした", kanji: "", hanviet: "", vi: "Hẹn gặp lại ngày mai" },
+                { jp: "メキシコ", kanji: "", hanviet: "", vi: "Mexico" }
+            ],
+            7: [
+                { jp: "きります", kanji: "切ります", hanviet: "THIẾT", vi: "Cắt" },
+                { jp: "おくります", kanji: "送ります", hanviet: "TỔNG", vi: "Gửi" },
+                { jp: "あげます", kanji: "", hanviet: "", vi: "Cho, tặng" },
+                { jp: "もらいます", kanji: "", hanviet: "", vi: "Nhận" },
+                { jp: "かします", kanji: "貸します", hanviet: "THẢI", vi: "Cho mượn, cho vay" },
+                { jp: "かります", kanji: "借ります", hanviet: "TÁ", vi: "Mượn, vay" },
+                { jp: "おしえます", kanji: "教えます", hanviet: "GIÁO", vi: "Dạy" },
+                { jp: "ならいます", kanji: "習います", hanviet: "TẬP", vi: "Học, tập" },
+                { jp: "かけます", kanji: "電話をかけます", hanviet: "ĐIỆN THOẠI", vi: "Gọi điện thoại" },
+                { jp: "て", kanji: "手", hanviet: "THỦ", vi: "Tay" },
+                { jp: "はし", kanji: "", hanviet: "", vi: "Đũa" },
+                { jp: "スプーン", kanji: "", hanviet: "", vi: "Thìa" },
+                { jp: "ナイフ", kanji: "", hanviet: "", vi: "Dao" },
+                { jp: "フォーク", kanji: "", hanviet: "", vi: "Nĩa" },
+                { jp: "はさみ", kanji: "", hanviet: "", vi: "Kéo" },
+                { jp: "パソコン", kanji: "", hanviet: "", vi: "Máy vi tính cá nhân" },
+                { jp: "ケータイ", kanji: "", hanviet: "", vi: "Điện thoại di động" },
+                { jp: "メール", kanji: "", hanviet: "", vi: "Mail" },
+                { jp: "ねんがじょう", kanji: "年賀状", hanviet: "NIÊN HẠ TRẠNG", vi: "Thiệp chúc mừng năm mới" },
+                { jp: "パンチ", kanji: "", hanviet: "", vi: "Cái đục lỗ" },
+                { jp: "ホッチキス", kanji: "", hanviet: "", vi: "Cái dập ghim" },
+                { jp: "セロテープ", kanji: "", hanviet: "", vi: "Băng dính" },
+                { jp: "けしゴム", kanji: "消しゴム", hanviet: "TIÊU", vi: "Cục tẩy" },
+                { jp: "かみ", kanji: "紙", hanviet: "CHỈ", vi: "Giấy" },
+                { jp: "はな", kanji: "花", hanviet: "HOA", vi: "Hoa" },
+                { jp: "シャツ", kanji: "", hanviet: "", vi: "Áo sơ mi" },
+                { jp: "プレゼント", kanji: "", hanviet: "", vi: "Quà tặng, tặng phẩm" },
+                { jp: "にもつ", kanji: "荷物", hanviet: "HÀ VẬT", vi: "Đồ đạc, hành lý" },
+                { jp: "おかね", kanji: "お金", hanviet: "KIM", vi: "Tiền" },
+                { jp: "きっぷ", kanji: "切符", hanviet: "THIẾT PHÙ", vi: "Vé" },
+                { jp: "クリスマス", kanji: "", hanviet: "", vi: "Giáng sinh" },
+                { jp: "ちち", kanji: "父", hanviet: "PHỤ", vi: "Bố (bố mình)" },
+                { jp: "はは", kanji: "母", hanviet: "MẪU", vi: "Mẹ (mẹ mình)" },
+                { jp: "おとうさん", kanji: "お父さん", hanviet: "PHỤ", vi: "Bố (bố người khác)" },
+                { jp: "おかあさん", kanji: "お母さん", hanviet: "MẪU", vi: "Mẹ (mẹ người khác)" },
+                { jp: "もう", kanji: "", hanviet: "", vi: "Đã, rồi" },
+                { jp: "まだ", kanji: "", hanviet: "", vi: "Vẫn chưa" },
+                { jp: "これから", kanji: "", hanviet: "", vi: "Từ bây giờ, sau đây" },
+                { jp: "すてきですね", kanji: "", hanviet: "", vi: "Đẹp nhỉ" },
+                { jp: "いらっしゃい", kanji: "", hanviet: "", vi: "Chào mừng anh chị đã đến chơi" },
+                { jp: "どうぞおあがりください", kanji: "どうぞお上がりください", hanviet: "THƯỢNG", vi: "Mời anh chị vào" },
+                { jp: "しつれいします", kanji: "失礼します", hanviet: "THẤT LỄ", vi: "Tôi xin phép (vào nhà)" },
+                { jp: "いかがですか", kanji: "", hanviet: "", vi: "Anh chị dùng có được không" },
+                { jp: "スペイン", kanji: "", hanviet: "", vi: "Tây Ban Nha" }
+            ],
+            8: [
+                { jp: "ハンサム", kanji: "", hanviet: "", vi: "Đẹp trai" },
+                { jp: "きれい", kanji: "", hanviet: "", vi: "Đẹp, sạch" },
+                { jp: "しずか", kanji: "静か", hanviet: "TĨNH", vi: "Yên tĩnh" },
+                { jp: "にぎやか", kanji: "", hanviet: "", vi: "Náo nhiệt" },
+                { jp: "ゆうめい", kanji: "有名", hanviet: "HỮU DANH", vi: "Nổi tiếng" },
+                { jp: "しんせつ", kanji: "親切", hanviet: "THÂN THIẾT", vi: "Tốt bụng, thân thiện" },
+                { jp: "げんき", kanji: "元気", hanviet: "NGUYÊN KHÍ", vi: "Khỏe" },
+                { jp: "ひま", kanji: "暇", hanviet: "HẠ", vi: "Rảnh rỗi" },
+                { jp: "べんり", kanji: "便利", hanviet: "TIỆN LỢI", vi: "Tiện lợi" },
+                { jp: "すてき", kanji: "", hanviet: "", vi: "Đẹp, hay" },
+                { jp: "おおきい", kanji: "大きい", hanviet: "ĐẠI", vi: "Lớn, to" },
+                { jp: "ちいさい", kanji: "小さい", hanviet: "TIỂU", vi: "Bé, nhỏ" },
+                { jp: "あたらしい", kanji: "新しい", hanviet: "TÂN", vi: "Mới" },
+                { jp: "ふるい", kanji: "古い", hanviet: "CỔ", vi: "Cũ" },
+                { jp: "いい", kanji: "", hanviet: "", vi: "Tốt" },
+                { jp: "わるい", kanji: "悪い", hanviet: "ÁC", vi: "Xấu" },
+                { jp: "あつい", kanji: "暑い、熱い", hanviet: "THỬ, NHIỆT", vi: "Nóng" },
+                { jp: "さむい", kanji: "寒い", hanviet: "HÀN", vi: "Lạnh, rét" },
+                { jp: "つめたい", kanji: "冷たい", hanviet: "LÃNH", vi: "Lạnh, buốt" },
+                { jp: "むずかしい", kanji: "難しい", hanviet: "NAN", vi: "Khó" },
+                { jp: "やさしい", kanji: "易しい", hanviet: "DI", vi: "Dễ" },
+                { jp: "たかい", kanji: "高い", hanviet: "CAO", vi: "Đắt, cao" },
+                { jp: "やすい", kanji: "安い", hanviet: "AN", vi: "Rẻ" },
+                { jp: "ひくい", kanji: "低い", hanviet: "ĐÊ", vi: "Thấp" },
+                { jp: "おもしろい", kanji: "", hanviet: "", vi: "Thú vị, hay" },
+                { jp: "おいしい", kanji: "", hanviet: "", vi: "Ngon" },
+                { jp: "いそがしい", kanji: "忙しい", hanviet: "MANG", vi: "Bận" },
+                { jp: "たのしい", kanji: "楽しい", hanviet: "LẠC", vi: "Vui" },
+                { jp: "しろい", kanji: "白い", hanviet: "BẠCH", vi: "Trắng" },
+                { jp: "くろい", kanji: "黒い", hanviet: "HẮC", vi: "Đen" },
+                { jp: "あかい", kanji: "赤い", hanviet: "XÍCH", vi: "Đỏ" },
+                { jp: "あおい", kanji: "青い", hanviet: "THANH", vi: "Xanh da trời" },
+                { jp: "さくら", kanji: "桜", hanviet: "ANH", vi: "Hoa anh đào" },
+                { jp: "やま", kanji: "山", hanviet: "SƠN, SAN", vi: "Núi" },
+                { jp: "まち", kanji: "町", hanviet: "ĐINH", vi: "Thị trấn, thành phố" },
+                { jp: "たべもの", kanji: "食べ物", hanviet: "THỰC VẬT", vi: "Đồ ăn" },
+                { jp: "ところ", kanji: "所", hanviet: "SỞ", vi: "Nơi, chỗ" },
+                { jp: "りょう", kanji: "寮", hanviet: "LIÊU", vi: "Kí túc xá" },
+                { jp: "レストラン", kanji: "", hanviet: "", vi: "Nhà hàng" },
+                { jp: "せいかつ", kanji: "生活", hanviet: "SINH HOẠT", vi: "Cuộc sống, sinh hoạt" },
+                { jp: "しごと", kanji: "お仕事", hanviet: "SĨ SỰ", vi: "Công việc" },
+                { jp: "どう", kanji: "", hanviet: "", vi: "Thế nào" },
+                { jp: "どんな", kanji: "", hanviet: "", vi: "Như thế nào" },
+                { jp: "とても", kanji: "", hanviet: "", vi: "Rất, lắm" },
+                { jp: "あまり", kanji: "", hanviet: "", vi: "Không lắm" },
+                { jp: "そして", kanji: "", hanviet: "", vi: "Và, thêm nữa" },
+                { jp: "が", kanji: "", hanviet: "", vi: "Nhưng" },
+                { jp: "おげんきですか", kanji: "お元気ですか", hanviet: "NGUYÊN KHÍ", vi: "Anh chị có khỏe không" },
+                { jp: "そうですね", kanji: "", hanviet: "", vi: "Thế à, Để tôi xem" },
+                { jp: "いいえけっこうです", kanji: "いいえ結構です", hanviet: "KẾT CẤU", vi: "Không, đủ rồi ạ" },
+                { jp: "もうですね", kanji: "", hanviet: "", vi: "Đã rồi nhỉ" },
+                { jp: "そろそろしつれいします", kanji: "そろそろ失礼します", hanviet: "THẤT LỄ", vi: "Đã đến lúc tôi phải về" },
+                { jp: "シャンハイ", kanji: "上海", hanviet: "THƯỢNG HẢI", vi: "Thượng Hải" },
+                { jp: "ふじさん", kanji: "富士山", hanviet: "PHÚ SĨ SƠN", vi: "Núi Phú Sĩ" }
+            ],
+            9: [
+                { jp: "わかります", kanji: "分かります", hanviet: "PHÂN", vi: "Hiểu, nắm được" },
+                { jp: "あります", kanji: "", hanviet: "", vi: "Có" },
+                { jp: "すき", kanji: "好き", hanviet: "HẢO", vi: "Thích" },
+                { jp: "きらい", kanji: "嫌い", hanviet: "HIỆM", vi: "Ghét, không thích" },
+                { jp: "じょうず", kanji: "上手", hanviet: "THƯỢNG THỦ", vi: "Giỏi, khéo" },
+                { jp: "へた", kanji: "下手", hanviet: "HẠ THỦ", vi: "Kém" },
+                { jp: "のみもの", kanji: "飲み物", hanviet: "ẨM VẬT", vi: "Đồ uống" },
+                { jp: "りょうり", kanji: "料理", hanviet: "LIỆU LÝ", vi: "Món ăn, việc nấu ăn" },
+                { jp: "スポーツ", kanji: "", hanviet: "", vi: "Thể thao" },
+                { jp: "やきゅう", kanji: "野球", hanviet: "DÃ CẦU", vi: "Bóng chày" },
+                { jp: "ダンス", kanji: "", hanviet: "", vi: "Nhảy, khiêu vũ" },
+                { jp: "りょこう", kanji: "旅行", hanviet: "LỮ HÀNH", vi: "Việc đi du lịch" },
+                { jp: "おんがく", kanji: "音楽", hanviet: "ÂM NHẠC", vi: "Âm nhạc" },
+                { jp: "うた", kanji: "歌", hanviet: "CA", vi: "Bài hát" },
+                { jp: "クラシック", kanji: "", hanviet: "", vi: "Nhạc cổ điển" },
+                { jp: "ジャズ", kanji: "", hanviet: "", vi: "Nhạc jazz" },
+                { jp: "コンサート", kanji: "", hanviet: "", vi: "Buổi hòa nhạc" },
+                { jp: "え", kanji: "絵", hanviet: "HỘI", vi: "Tranh, hội họa" },
+                { jp: "じ", kanji: "字", hanviet: "TỰ", vi: "Chữ" },
+                { jp: "かんじ", kanji: "漢字", hanviet: "HÁN TỰ", vi: "Chữ hán" },
+                { jp: "こまかいおかね", kanji: "細かいお金", hanviet: "TẾ KIM", vi: "Tiền lẻ" },
+                { jp: "チケット", kanji: "", hanviet: "", vi: "Vé" },
+                { jp: "じかん", kanji: "時間", hanviet: "THỜI GIAN", vi: "Thời gian" },
+                { jp: "ようじ", kanji: "用事", hanviet: "DỤNG SỰ", vi: "Việc bận, công chuyện" },
+                { jp: "やくそく", kanji: "約束", hanviet: "ƯỚC THÚC", vi: "Cuộc hẹn, lời hứa" },
+                { jp: "アルバイト", kanji: "", hanviet: "", vi: "Việc làm thêm" },
+                { jp: "ごしゅじん", kanji: "ご主人", hanviet: "CHỦ NHÂN", vi: "Chồng (người khác)" },
+                { jp: "おっと", kanji: "夫", hanviet: "PHU", vi: "Chồng (mình)" },
+                { jp: "しゅじん", kanji: "主人", hanviet: "CHỦ NHÂN", vi: "Chồng (mình)" },
+                { jp: "おくさん", kanji: "奥さん", hanviet: "ÁO", vi: "Vợ (người khác)" },
+                { jp: "つま", kanji: "妻", hanviet: "THÊ", vi: "Vợ (mình)" },
+                { jp: "かない", kanji: "家内", hanviet: "GIA NỘI", vi: "Vợ (mình)" },
+                { jp: "こども", kanji: "子ども", hanviet: "TỬ", vi: "Con cái, trẻ con" },
+                { jp: "よく", kanji: "", hanviet: "", vi: "Tốt, rõ" },
+                { jp: "だいたい", kanji: "", hanviet: "", vi: "Đại khái, đại thể" },
+                { jp: "たくさん", kanji: "", hanviet: "", vi: "Nhiều" },
+                { jp: "すこし", kanji: "少し", hanviet: "THIỂU", vi: "Ít, một chút" },
+                { jp: "ぜんぜん", kanji: "全然", hanviet: "TOÀN NHIÊN", vi: "Hoàn toàn không" },
+                { jp: "はやく", kanji: "早く、速く", hanviet: "TẢO, TỐC", vi: "Sớm, nhanh" },
+                { jp: "から", kanji: "", hanviet: "", vi: "Vì" },
+                { jp: "どうして", kanji: "", hanviet: "", vi: "Tại sao" },
+                { jp: "かしてください", kanji: "貸してください", hanviet: "THẢI", vi: "Làm ơn cho tôi mượn" },
+                { jp: "いいですよ", kanji: "", hanviet: "", vi: "Được đấy nhỉ" },
+                { jp: "ざんねんですが", kanji: "残念ですが", hanviet: "TÀN NIỆM", vi: "Thật đáng tiếc" },
+                { jp: "いっしょにいかがですか", kanji: "", hanviet: "", vi: "Bạn cùng với tôi được không" },
+                { jp: "ちょっと", kanji: "", hanviet: "", vi: "Có lẽ không được rồi" },
+                { jp: "だめですか", kanji: "", hanviet: "", vi: "Không được à" },
+                { jp: "またこんどおねがいします", kanji: "また今度お願いします", hanviet: "KIM ĐỘ NGUYỆN", vi: "Hẹn anh chị lần sau vậy" }
+            ],
+            10: [
+                { jp: "います", kanji: "", hanviet: "", vi: "Có, ở (người, động vật)" },
+                { jp: "いろいろ", kanji: "色々", hanviet: "SẮC", vi: "Nhiều, đa dạng" },
+                { jp: "おとこのひと", kanji: "男の人", hanviet: "NAM NHÂN", vi: "Người đàn ông" },
+                { jp: "おんなのひと", kanji: "女の人", hanviet: "NỮ NHÂN", vi: "Người đàn bà" },
+                { jp: "おとこのこ", kanji: "男の子", hanviet: "NAM TỬ", vi: "Cậu con trai, cậu bé" },
+                { jp: "おんなのこ", kanji: "女の子", hanviet: "NỮ TỬ", vi: "Cô con gái, cô bé" },
+                { jp: "いぬ", kanji: "犬", hanviet: "KHUYỂN", vi: "Chó" },
+                { jp: "ねこ", kanji: "猫", hanviet: "MIÊU", vi: "Mèo" },
+                { jp: "パンダ", kanji: "", hanviet: "", vi: "Gấu trúc" },
+                { jp: "ぞう", kanji: "象", hanviet: "TƯỢNG", vi: "Voi" },
+                { jp: "き", kanji: "木", hanviet: "MỘC", vi: "Cây, gỗ" },
+                { jp: "もの", kanji: "物", hanviet: "VẬT", vi: "Vật, đồ vật" },
+                { jp: "でんち", kanji: "電池", hanviet: "ĐIỆN TRÌ", vi: "Pin" },
+                { jp: "はこ", kanji: "箱", hanviet: "TƯƠNG", vi: "Hộp" },
+                { jp: "スイッチ", kanji: "", hanviet: "", vi: "Công tắc" },
+                { jp: "れいぞうこ", kanji: "冷蔵庫", hanviet: "LÃNH TÀNG KHỐ", vi: "Tủ lạnh" },
+                { jp: "テーブル", kanji: "", hanviet: "", vi: "Bàn" },
+                { jp: "ベッド", kanji: "", hanviet: "", vi: "Giường" },
+                { jp: "たな", kanji: "棚", hanviet: "BẰNG", vi: "Giá kệ" },
+                { jp: "ドア", kanji: "", hanviet: "", vi: "Cửa" },
+                { jp: "まど", kanji: "窓", hanviet: "SONG", vi: "Cửa sổ" },
+                { jp: "ポスト", kanji: "", hanviet: "", vi: "Hộp thư, hòm thư" },
+                { jp: "ビル", kanji: "", hanviet: "", vi: "Tòa nhà" },
+                { jp: "コンビニ", kanji: "", hanviet: "", vi: "Cửa hàng tiện lợi" },
+                { jp: "こうえん", kanji: "公園", hanviet: "CÔNG VIÊN", vi: "Công viên" },
+                { jp: "きっさてん", kanji: "喫茶店", hanviet: "KHIẾT TRÀ ĐIỂM", vi: "Quán giải khát, quán cafe" },
+                { jp: "や", kanji: "屋", hanviet: "ỐC", vi: "Hiệu, cửa hàng" },
+                { jp: "のりば", kanji: "乗り場", hanviet: "THỪA TRƯỜNG", vi: "Bến xe, điểm lên xuống xe" },
+                { jp: "けん", kanji: "県", hanviet: "HUYỆN", vi: "Tỉnh" },
+                { jp: "うえ", kanji: "上", hanviet: "THƯỢNG", vi: "Trên" },
+                { jp: "した", kanji: "下", hanviet: "HẠ", vi: "Dưới" },
+                { jp: "まえ", kanji: "前", hanviet: "TIỀN", vi: "Trước" },
+                { jp: "うしろ", kanji: "後ろ", hanviet: "HẬU", vi: "Sau" },
+                { jp: "みぎ", kanji: "右", hanviet: "HỮU", vi: "Phải" },
+                { jp: "ひだり", kanji: "左", hanviet: "TÁ", vi: "Trái" },
+                { jp: "なか", kanji: "中", hanviet: "TRUNG", vi: "Trong, giữa" },
+                { jp: "そと", kanji: "外", hanviet: "NGOẠI", vi: "Ngoài" },
+                { jp: "となり", kanji: "隣", hanviet: "LÂN", vi: "Bên cạnh" },
+                { jp: "ちかく", kanji: "近く", hanviet: "CẬN", vi: "Gần" },
+                { jp: "あいだ", kanji: "間", hanviet: "GIAN", vi: "Giữa" },
+                { jp: "コーナー", kanji: "", hanviet: "", vi: "Góc" },
+                { jp: "いちばんした", kanji: "一番下", hanviet: "NHẤT PHIÊN HẠ", vi: "Thấp nhất, phía dưới cùng" }
+            ],
+            11: [
+                { jp: "こどもがいます", kanji: "子供がいます", hanviet: "TỬ CUNG", vi: "Có con" },
+                { jp: "にほんにいます", kanji: "日本にいます", hanviet: "NHẬT BẢN", vi: "Ở Nhật" },
+                { jp: "かかります", kanji: "", hanviet: "", vi: "Mất, tốn (thời gian, tiền)" },
+                { jp: "かいしゃをやすみます", kanji: "会社を休みます", hanviet: "HƯU HỘI XÃ", vi: "Nghỉ làm" },
+                { jp: "ひとつ", kanji: "1つ", hanviet: "", vi: "Một cái" },
+                { jp: "ふたつ", kanji: "2つ", hanviet: "", vi: "Hai cái" },
+                { jp: "みっつ", kanji: "3つ", hanviet: "", vi: "Ba cái" },
+                { jp: "よっつ", kanji: "4つ", hanviet: "", vi: "Bốn cái" },
+                { jp: "いつつ", kanji: "5つ", hanviet: "", vi: "Năm cái" },
+                { jp: "むっつ", kanji: "6つ", hanviet: "", vi: "Sáu cái" },
+                { jp: "ななつ", kanji: "7つ", hanviet: "", vi: "Bảy cái" },
+                { jp: "やっつ", kanji: "8つ", hanviet: "", vi: "Tám cái" },
+                { jp: "ここのつ", kanji: "9つ", hanviet: "", vi: "Chín cái" },
+                { jp: "とお", kanji: "10", hanviet: "", vi: "Mười cái" },
+                { jp: "いくつ", kanji: "", hanviet: "", vi: "Mấy cái, bao nhiêu cái" },
+                { jp: "ひとり", kanji: "1人", hanviet: "NHÂN", vi: "Một người" },
+                { jp: "ふたり", kanji: "2人", hanviet: "NHÂN", vi: "Hai người" },
+                { jp: "にん", kanji: "一人", hanviet: "NHÂN", vi: "Người" },
+                { jp: "だい", kanji: "一台", hanviet: "ĐÀI", vi: "Cái (đếm máy móc)" },
+                { jp: "まい", kanji: "一枚", hanviet: "MAI", vi: "Tờ, tấm (đếm vật mỏng)" },
+                { jp: "かい", kanji: "一回", hanviet: "HỒI", vi: "Lần" },
+                { jp: "りんご", kanji: "", hanviet: "", vi: "Táo" },
+                { jp: "みかん", kanji: "", hanviet: "", vi: "Quýt" },
+                { jp: "サンドイッチ", kanji: "", hanviet: "", vi: "Bánh San Uých" },
+                { jp: "カレーライス", kanji: "", hanviet: "", vi: "Món cơm ca-ri" },
+                { jp: "アイスクリーム", kanji: "", hanviet: "", vi: "Kem" },
+                { jp: "きって", kanji: "切手", hanviet: "THIẾT THỦ", vi: "Tem" },
+                { jp: "はがき", kanji: "", hanviet: "", vi: "Bưu thiếp" },
+                { jp: "ふうとう", kanji: "封筒", hanviet: "PHONG ĐỒNG", vi: "Phong bì" },
+                { jp: "りょうしん", kanji: "両親", hanviet: "LƯỠNG THÂN", vi: "Bố mẹ" },
+                { jp: "きょうだい", kanji: "兄弟", hanviet: "HUYNH ĐỆ", vi: "Anh chị em" },
+                { jp: "あに", kanji: "兄", hanviet: "HUYNH", vi: "Anh trai" },
+                { jp: "おにいさん", kanji: "お兄さん", hanviet: "HUYNH", vi: "Anh trai của người khác" },
+                { jp: "あね", kanji: "姉", hanviet: "TỶ", vi: "Chị gái" },
+                { jp: "おねえさん", kanji: "お姉さん", hanviet: "TỶ", vi: "Chị gái của người khác" },
+                { jp: "おとうと", kanji: "弟", hanviet: "ĐỆ", vi: "Em trai" },
+                { jp: "おとうとさん", kanji: "弟さん", hanviet: "ĐỆ", vi: "Em trai của người khác" },
+                { jp: "いもうと", kanji: "妹", hanviet: "MUỘI", vi: "Em gái" },
+                { jp: "いもうとさん", kanji: "妹さん", hanviet: "MUỘI", vi: "Em gái của người khác" },
+                { jp: "がいこく", kanji: "外国", hanviet: "NGOẠI QUỐC", vi: "Nước ngoài" },
+                { jp: "りゅうがくせい", kanji: "留学生", hanviet: "LƯU HỌC SINH", vi: "Du học sinh" },
+                { jp: "クラス", kanji: "", hanviet: "", vi: "Lớp học" },
+                { jp: "じかん", kanji: "一時間", hanviet: "THỜI GIAN", vi: "Tiếng" },
+                { jp: "しゅうかん", kanji: "一週間", hanviet: "CHU GIAN", vi: "Tuần" },
+                { jp: "かげつ", kanji: "一か月", hanviet: "NGUYỆT", vi: "Tháng" },
+                { jp: "ねん", kanji: "一年", hanviet: "NIÊN", vi: "Năm" },
+                { jp: "ぐらい", kanji: "", hanviet: "", vi: "Khoảng" },
+                { jp: "どのくらい", kanji: "", hanviet: "", vi: "Bao lâu" },
+                { jp: "ぜんぶで", kanji: "全部で", hanviet: "TOÀN BỘ", vi: "Tổng cộng" },
+                { jp: "みんな", kanji: "", hanviet: "", vi: "Tất cả" },
+                { jp: "だけ", kanji: "", hanviet: "", vi: "Chỉ" },
+                { jp: "かしこまりました", kanji: "", hanviet: "", vi: "Tôi hiểu rồi ạ" },
+                { jp: "いいおてんきですね", kanji: "いいお天気ですね", hanviet: "THIÊN KHÍ", vi: "Trời đẹp nhỉ" },
+                { jp: "おでかけですか", kanji: "お出かけですか", hanviet: "XUẤT", vi: "Anh chị đi ra ngoài đấy à" },
+                { jp: "ちょっとまで", kanji: "", hanviet: "", vi: "Tôi đi một chút" },
+                { jp: "いってらっしゃい", kanji: "行ってらっしゃい", hanviet: "HÀNH", vi: "Anh chị đi nhé" },
+                { jp: "いってきます", kanji: "行ってきます", hanviet: "HÀNH", vi: "Tôi đi đây" },
+                { jp: "おねがいします", kanji: "お願いします", hanviet: "NGUYỆN", vi: "Làm ơn" },
+                { jp: "オーストラリア", kanji: "", hanviet: "", vi: "Úc" }
+            ],
+            12: [
+                { jp: "かんたん", kanji: "簡単", hanviet: "GIẢN ĐƠN", vi: "Đơn giản, dễ" },
+                { jp: "ちかい", kanji: "近い", hanviet: "CẬN", vi: "Gần" },
+                { jp: "とおい", kanji: "遠い", hanviet: "VIỄN", vi: "Xa" },
+                { jp: "はやい", kanji: "速い、早い", hanviet: "TỐC, TẢO", vi: "Nhanh, sớm" },
+                { jp: "おそい", kanji: "遅い", hanviet: "TRÌ", vi: "Chậm, muộn" },
+                { jp: "おおい", kanji: "人が多い", hanviet: "ĐA NHÂN", vi: "Nhiều" },
+                { jp: "すくない", kanji: "人が少ない", hanviet: "THIẾU NHÂN", vi: "Ít" },
+                { jp: "あたたかい", kanji: "温かい、暖かい", hanviet: "ÔN, NOÃN", vi: "Ấm" },
+                { jp: "すずしい", kanji: "涼しい", hanviet: "LƯƠNG", vi: "Mát" },
+                { jp: "あまい", kanji: "甘い", hanviet: "CAM", vi: "Ngọt" },
+                { jp: "からい", kanji: "辛い", hanviet: "TÂN", vi: "Cay" },
+                { jp: "おもい", kanji: "重い", hanviet: "TRỌNG", vi: "Nặng" },
+                { jp: "かるい", kanji: "軽い", hanviet: "KHINH", vi: "Nhẹ" },
+                { jp: "いい", kanji: "", hanviet: "", vi: "Thích, chọn, dùng cafe" },
+                { jp: "きせつ", kanji: "季節", hanviet: "QUÝ TIẾT", vi: "Mùa" },
+                { jp: "はる", kanji: "春", hanviet: "XUÂN", vi: "Mùa xuân" },
+                { jp: "なつ", kanji: "夏", hanviet: "HẠ", vi: "Mùa hè" },
+                { jp: "あき", kanji: "秋", hanviet: "THU", vi: "Mùa thu" },
+                { jp: "ふゆ", kanji: "冬", hanviet: "ĐÔNG", vi: "Mùa đông" },
+                { jp: "てんき", kanji: "天気", hanviet: "THIÊN KHÍ", vi: "Thời tiết" },
+                { jp: "あめ", kanji: "雨", hanviet: "VŨ", vi: "Mưa" },
+                { jp: "ゆき", kanji: "雪", hanviet: "TUYẾT", vi: "Tuyết" },
+                { jp: "くもり", kanji: "曇り", hanviet: "ĐÀM", vi: "Có mây" },
+                { jp: "ホテル", kanji: "", hanviet: "", vi: "Khách sạn" },
+                { jp: "くうこう", kanji: "空港", hanviet: "KHÔNG CẢNG", vi: "Sân bay" },
+                { jp: "うみ", kanji: "海", hanviet: "HẢI", vi: "Biển, đại dương" },
+                { jp: "せかい", kanji: "世界", hanviet: "THẾ GIỚI", vi: "Thế giới" },
+                { jp: "パーティー", kanji: "", hanviet: "", vi: "Tiệc" },
+                { jp: "おまつり", kanji: "お祭り", hanviet: "TẾ", vi: "Lễ hội" },
+                { jp: "ぶたにく", kanji: "豚肉", hanviet: "ĐỒN NHỤC", vi: "Thịt lợn" },
+                { jp: "とりにく", kanji: "とり肉", hanviet: "NHỤC", vi: "Thịt gà" },
+                { jp: "ぎゅうにく", kanji: "牛肉", hanviet: "NGƯU NHỤC", vi: "Thịt bò" },
+                { jp: "レモン", kanji: "", hanviet: "", vi: "Quả chanh" },
+                { jp: "いけばな", kanji: "生け花", hanviet: "SINH HOA", vi: "Nghệ thuật cắm hoa" },
+                { jp: "もみじ", kanji: "紅葉", hanviet: "HỒNG DIỆP", vi: "Lá đỏ" },
+                { jp: "どちら", kanji: "", hanviet: "", vi: "Cái nào" },
+                { jp: "どちらも", kanji: "", hanviet: "", vi: "Cả hai" },
+                { jp: "いちばん", kanji: "", hanviet: "", vi: "Nhất" },
+                { jp: "ずっと", kanji: "", hanviet: "", vi: "Hơn hẳn" },
+                { jp: "はじめて", kanji: "初めて", hanviet: "SƠ", vi: "Lần đầu tiên" },
+                { jp: "ただいま", kanji: "", hanviet: "", vi: "Tôi đã về đây" },
+                { jp: "つかれました", kanji: "疲れました", hanviet: "BÌ", vi: "Tôi mệt rồi" },
+                { jp: "ホンコン", kanji: "香港", hanviet: "HƯƠNG CẢNG", vi: "Hồng Kông" },
+                { jp: "シンガポール", kanji: "", hanviet: "", vi: "Singapore" }
+            ],
+            13: [
+                { jp: "あそびます", kanji: "遊びます", hanviet: "DU", vi: "Chơi" },
+                { jp: "およぎます", kanji: "泳ぎます", hanviet: "VỊNH", vi: "Bơi" },
+                { jp: "むかえます", kanji: "迎えます", hanviet: "NGHÊNH", vi: "Đón, chào đón" },
+                { jp: "つかれます", kanji: "疲れます", hanviet: "BÌ", vi: "Mệt" },
+                { jp: "けっこんします", kanji: "結婚します", hanviet: "KẾT HÔN", vi: "Kết hôn, lập gia đình" },
+                { jp: "かいものします", kanji: "買い物します", hanviet: "MÃI VẬT", vi: "Mua hàng" },
+                { jp: "しょくじします", kanji: "食事します", hanviet: "THỰC SỰ", vi: "Ăn cơm, dùng bữa" },
+                { jp: "さんぽします", kanji: "公園を散歩します", hanviet: "CÔNG VIÊN TẢN BỘ", vi: "Đi dạo ở công viên" },
+                { jp: "たいへん", kanji: "大変", hanviet: "ĐẠI BIẾN", vi: "Vất vả, khó khăn, khổ" },
+                { jp: "ほしい", kanji: "欲しい", hanviet: "DỤC", vi: "Muốn có" },
+                { jp: "ひろい", kanji: "広い", hanviet: "QUẢNG", vi: "Rộng" },
+                { jp: "せまい", kanji: "狭い", hanviet: "HIỆP", vi: "Chật, hẹp" },
+                { jp: "プール", kanji: "", hanviet: "", vi: "Bể bơi" },
+                { jp: "かわ", kanji: "川", hanviet: "XUYÊN", vi: "Sông" },
+                { jp: "びじゅつ", kanji: "美術", hanviet: "MỸ THUẬT", vi: "Mỹ thuật" },
+                { jp: "つり", kanji: "釣り", hanviet: "ĐIẾU", vi: "Việc câu cá" },
+                { jp: "スキー", kanji: "", hanviet: "", vi: "Việc trượt tuyết" },
+                { jp: "しゅうまつ", kanji: "週末", hanviet: "CHU MẠT", vi: "Cuối tuần" },
+                { jp: "おしょうがつ", kanji: "お正月", hanviet: "CHÍNH NGUYỆT", vi: "Năm mới" },
+                { jp: "ごろ", kanji: "", hanviet: "", vi: "Khoảng, vào khoảng" },
+                { jp: "なにか", kanji: "何か", hanviet: "HÀ", vi: "Cái gì đó" },
+                { jp: "どこか", kanji: "", hanviet: "", vi: "Đâu đó, chỗ nào đó" },
+                { jp: "のどがかわきます", kanji: "", hanviet: "", vi: "Tôi khát" },
+                { jp: "おなかがすきます", kanji: "", hanviet: "", vi: "Tôi đói rồi" },
+                { jp: "そうしましょう", kanji: "", hanviet: "", vi: "Nhất trí" },
+                { jp: "ていしょく", kanji: "定食", hanviet: "ĐỊNH THỰC", vi: "Cơm suất, cơm phần" },
+                { jp: "ぎゅうどん", kanji: "牛どん", hanviet: "NGƯU", vi: "Món cơm thịt bò" },
+                { jp: "ちょっとおまちください", kanji: "少々お待ちください", hanviet: "THIỂU ĐÃI", vi: "Anh chị vui lòng đợi một chút" },
+                { jp: "でございます", kanji: "", hanviet: "", vi: "Cách sử dụng lịch sự của です" },
+                { jp: "べつべつに", kanji: "別々に", hanviet: "BIỆT", vi: "Riêng lẻ, tách biệt" }
+            ],
+            14: [
+                { jp: "つけます", kanji: "", hanviet: "", vi: "Bật (điện, máy điều hòa)" },
+                { jp: "けします", kanji: "消します", hanviet: "TIÊU", vi: "Tắt (điện, máy điều hòa)" },
+                { jp: "あけます", kanji: "開けます", hanviet: "KHAI", vi: "Mở (cửa, cửa sổ)" },
+                { jp: "しめます", kanji: "閉めます", hanviet: "BẾ", vi: "Đóng (cửa, cửa sổ)" },
+                { jp: "いそぎます", kanji: "急ぎます", hanviet: "CẤP", vi: "Vội, gấp" },
+                { jp: "まちます", kanji: "待ちます", hanviet: "ĐÃI", vi: "Đợi, chờ" },
+                { jp: "とめます", kanji: "止めます", hanviet: "CHỈ", vi: "Dừng, đỗ (ôtô)" },
+                { jp: "もちます", kanji: "持ちます", hanviet: "TRÌ", vi: "Mang, cầm" },
+                { jp: "とります", kanji: "取ります", hanviet: "THỦ", vi: "Lấy" },
+                { jp: "てつだいます", kanji: "手伝います", hanviet: "THỦ TRUYỀN", vi: "Giúp đỡ (làm việc)" },
+                { jp: "よびます", kanji: "呼びます", hanviet: "HÔ", vi: "Gọi (taxi, tên)" },
+                { jp: "はなします", kanji: "話します", hanviet: "THOẠI", vi: "Nói chuyện" },
+                { jp: "つかいます", kanji: "使います", hanviet: "SỬ", vi: "Dùng, sử dụng" },
+                { jp: "みせます", kanji: "見せます", hanviet: "KIẾN", vi: "Cho xem, trình" },
+                { jp: "おしえます", kanji: "住所を教えます", hanviet: "TRÚ SỞ GIÁO", vi: "Nói, chỉ cho biết địa chỉ" },
+                { jp: "すわります", kanji: "座ります", hanviet: "TỌA", vi: "Ngồi" },
+                { jp: "たちます", kanji: "立ちます", hanviet: "LẬP", vi: "Đứng" },
+                { jp: "はいります", kanji: "喫茶店に入ります", hanviet: "KHIẾT TRÀ ĐIỂM NHẬP", vi: "Vào (quán giải khát)" },
+                { jp: "でます", kanji: "喫茶店を出ます", hanviet: "KHIẾT TRÀ ĐIỂM XUẤT", vi: "Ra khỏi (quán giải khát)" },
+                { jp: "ふります", kanji: "降ります", hanviet: "VŨ GIÁNG", vi: "Rơi" },
+                { jp: "コピーします", kanji: "", hanviet: "", vi: "Copy" },
+                { jp: "でんき", kanji: "電気", hanviet: "ĐIỆN KHÍ", vi: "Điện, đèn điện" },
+                { jp: "エアコン", kanji: "", hanviet: "", vi: "Máy điều hòa" },
+                { jp: "パスポート", kanji: "", hanviet: "", vi: "Hộ chiếu" },
+                { jp: "なまえ", kanji: "名前", hanviet: "DANH TIỀN", vi: "Tên" },
+                { jp: "じゅうしょ", kanji: "住所", hanviet: "TRÚ SỞ", vi: "Địa chỉ" },
+                { jp: "ちず", kanji: "地図", hanviet: "ĐỊA ĐỒ", vi: "Bản đồ" },
+                { jp: "しお", kanji: "塩", hanviet: "DIÊM", vi: "Muối" },
+                { jp: "さとう", kanji: "砂糖", hanviet: "SA ĐƯỜNG", vi: "Đường" },
+                { jp: "もんだい", kanji: "問題", hanviet: "VẤN ĐỀ", vi: "Vấn đề, câu hỏi" },
+                { jp: "こたえ", kanji: "答え", hanviet: "ĐÁP", vi: "Câu trả lời" },
+                { jp: "よみかた", kanji: "読み方", hanviet: "ĐỘC PHƯƠNG", vi: "Cách đọc" },
+                { jp: "かた", kanji: "方", hanviet: "PHƯƠNG", vi: "Cách" },
+                { jp: "まっすぐ", kanji: "", hanviet: "", vi: "Thẳng" },
+                { jp: "ゆっくり", kanji: "", hanviet: "", vi: "Chậm, thong thả, thoải mái" },
+                { jp: "すぐ", kanji: "", hanviet: "", vi: "Ngay, lập tức" },
+                { jp: "また", kanji: "", hanviet: "", vi: "Lại" },
+                { jp: "あとで", kanji: "", hanviet: "", vi: "Sau" },
+                { jp: "もうすこし", kanji: "もう少し", hanviet: "THIỂU", vi: "Thêm một chút nữa" },
+                { jp: "もう", kanji: "", hanviet: "", vi: "Thêm" },
+                { jp: "さあ", kanji: "", hanviet: "", vi: "Thôi, nào" },
+                { jp: "あれ", kanji: "", hanviet: "", vi: "Ô!" },
+                { jp: "おつり", kanji: "お釣り", hanviet: "ĐIẾU", vi: "Tiền thừa" }
+            ],
+            15: [
+                { jp: "おきます", kanji: "置きます", hanviet: "TRÍ", vi: "Đặt, để" },
+                { jp: "つくります", kanji: "作ります、造ります", hanviet: "TÁC, TẠO", vi: "Làm, chế tạo, sản xuất" },
+                { jp: "うります", kanji: "売ります", hanviet: "MẠI", vi: "Bán" },
+                { jp: "しります", kanji: "知ります", hanviet: "TRI", vi: "Biết" },
+                { jp: "すみます", kanji: "住みます", hanviet: "TRÚ", vi: "Sống, cư trú ở" },
+                { jp: "けんきゅうします", kanji: "研究します", hanviet: "NGHIÊN CỨU", vi: "Nghiên cứu" },
+                { jp: "しりょう", kanji: "資料", hanviet: "TƯ LIỆU", vi: "Tài liệu, tư liệu" },
+                { jp: "カタログ", kanji: "", hanviet: "", vi: "Ca-ta-lô" },
+                { jp: "じこくひょう", kanji: "時刻表", hanviet: "THỜI KHẮC BIỂU", vi: "Bảng giờ tàu chạy" },
+                { jp: "ふく", kanji: "服", hanviet: "PHỤC", vi: "Quần áo" },
+                { jp: "せいひん", kanji: "製品", hanviet: "CHẾ PHẨM", vi: "Sản phẩm" },
+                { jp: "ソフト", kanji: "", hanviet: "", vi: "Phần mềm" },
+                { jp: "でんしじしょ", kanji: "電子辞書", hanviet: "ĐIỆN TỬ TỪ THƯ", vi: "Từ điển điện tử, kim từ điển" },
+                { jp: "けいざい", kanji: "経済", hanviet: "KINH TẾ", vi: "Kinh tế" },
+                { jp: "しやくしょ", kanji: "市役所", hanviet: "THỊ DỊCH SỞ", vi: "Văn phòng hành chính thành phố" },
+                { jp: "こうこう", kanji: "高校", hanviet: "CAO HIỆU", vi: "Trường phổ thông, cấp 3" },
+                { jp: "はいしゃ", kanji: "歯医者", hanviet: "XỈ Y GIẢ", vi: "Nha sĩ" },
+                { jp: "どくしん", kanji: "独身", hanviet: "ĐỘC THÂN", vi: "Độc thân" },
+                { jp: "みなさん", kanji: "皆さん", hanviet: "GIAI", vi: "Mọi người ơi, thưa mọi người" },
+                { jp: "おもいだします", kanji: "思い出します", hanviet: "TƯ XUẤT", vi: "Nhớ lại, hồi tưởng" },
+                { jp: "いらっしゃいます", kanji: "", hanviet: "", vi: "Thể kính trọng của います" }
+            ],
+            16: [
+                { jp: "のります", kanji: "電車に乗ります", hanviet: "ĐIỆN XA THỪA", vi: "Đi, lên" },
+                { jp: "おります", kanji: "電車を降ります", hanviet: "ĐIỆN XA GIÁNG", vi: "Xuống" },
+                { jp: "のりかえます", kanji: "乗り換えます", hanviet: "THỪA HOÁN", vi: "Chuyển, đổi (tàu, xe)" },
+                { jp: "あびます", kanji: "シャワーを浴びます", hanviet: "DỤC", vi: "Tắm" },
+                { jp: "いれます", kanji: "入れます", hanviet: "NHẬP", vi: "Cho vào, bỏ vào" },
+                { jp: "だします", kanji: "出します", hanviet: "XUẤT", vi: "Lấy ra, rút, gửi" },
+                { jp: "おろします", kanji: "お金を下ろします", hanviet: "KIM HẠ", vi: "Rút" },
+                { jp: "はいります", kanji: "大学に入ります", hanviet: "ĐẠI HỌC NHẬP", vi: "Vào, nhập học" },
+                { jp: "でます", kanji: "大学を出ます", hanviet: "ĐẠI HỌC XUẤT", vi: "Ra, tốt nghiệp" },
+                { jp: "おします", kanji: "押します", hanviet: "ÁP", vi: "Bấm, ấn" },
+                { jp: "のみます", kanji: "飲みます", hanviet: "ẨM", vi: "Uống" },
+                { jp: "はじめます", kanji: "始めます", hanviet: "THỦY", vi: "Bắt đầu" },
+                { jp: "けんがくします", kanji: "見学します", hanviet: "KIẾN HỌC", vi: "Kiến tập, tham quan" },
+                { jp: "でんわします", kanji: "電話します", hanviet: "ĐIỆN THOẠI", vi: "Gọi điện" },
+                { jp: "わかい", kanji: "若い", hanviet: "NHƯỢC", vi: "Trẻ" },
+                { jp: "ながい", kanji: "長い", hanviet: "TRƯỜNG", vi: "Dài" },
+                { jp: "みじかい", kanji: "短い", hanviet: "ĐOẢN", vi: "Ngắn" },
+                { jp: "あかるい", kanji: "明るい", hanviet: "MINH", vi: "Sáng" },
+                { jp: "くらい", kanji: "暗い", hanviet: "ÁM", vi: "Tối" },
+                { jp: "からだ", kanji: "体", hanviet: "THỂ", vi: "Người, cơ thể" },
+                { jp: "あたま", kanji: "頭", hanviet: "ĐẦU", vi: "Đầu" },
+                { jp: "かみ", kanji: "髪", hanviet: "PHÁT", vi: "Tóc" },
+                { jp: "かお", kanji: "顔", hanviet: "NHAN", vi: "Mặt" },
+                { jp: "め", kanji: "目", hanviet: "MỤC", vi: "Mắt" },
+                { jp: "みみ", kanji: "耳", hanviet: "NHĨ", vi: "Tai" },
+                { jp: "はな", kanji: "鼻", hanviet: "TỊ", vi: "Mũi" },
+                { jp: "くち", kanji: "口", hanviet: "KHẨU", vi: "Miệng" },
+                { jp: "は", kanji: "歯", hanviet: "XỈ", vi: "Răng" },
+                { jp: "おなか", kanji: "", hanviet: "", vi: "Bụng" },
+                { jp: "あし", kanji: "足", hanviet: "TÚC", vi: "Chân" },
+                { jp: "せ", kanji: "背", hanviet: "BỐI", vi: "Chiều cao" },
+                { jp: "サービス", kanji: "", hanviet: "", vi: "Dịch vụ" },
+                { jp: "ジョギング", kanji: "", hanviet: "", vi: "Việc chạy bộ" },
+                { jp: "シャワー", kanji: "", hanviet: "", vi: "Vòi hoa sen" },
+                { jp: "みどり", kanji: "緑", hanviet: "LỤC", vi: "Màu xanh lá cây" },
+                { jp: "おてら", kanji: "お寺", hanviet: "TỰ", vi: "Chùa" },
+                { jp: "じんじゃ", kanji: "神社", hanviet: "THẦN XÃ", vi: "Đền thờ đạo thần" },
+                { jp: "ばん", kanji: "一番", hanviet: "PHIÊN", vi: "Số" },
+                { jp: "どうやって", kanji: "", hanviet: "", vi: "Làm thế nào" },
+                { jp: "どの", kanji: "", hanviet: "", vi: "Nào" },
+                { jp: "どれ", kanji: "", hanviet: "", vi: "Cái nào" },
+                { jp: "すごいですね", kanji: "", hanviet: "", vi: "Thật là tuyệt vời" },
+                { jp: "まだまだです", kanji: "", hanviet: "", vi: "Tôi còn kém lắm" },
+                { jp: "まず", kanji: "", hanviet: "", vi: "Trước hết, đầu tiên" },
+                { jp: "つぎに", kanji: "次に", hanviet: "THỨ", vi: "Tiếp theo (sau đó)" },
+                { jp: "きんがく", kanji: "金額", hanviet: "KIM NGẠCH", vi: "Số tiền, khoản tiền" },
+                { jp: "かくにん", kanji: "確認", hanviet: "XÁC NHẬN", vi: "Sự xác nhận, kiểm tra" },
+                { jp: "ボタン", kanji: "", hanviet: "", vi: "Nút" }
+            ],
+            17: [
+                { jp: "おぼえます", kanji: "覚えます", hanviet: "GIÁC", vi: "Nhớ" },
+                { jp: "わすれます", kanji: "忘れます", hanviet: "VONG", vi: "Quên" },
+                { jp: "なくします", kanji: "", hanviet: "", vi: "Mất, đánh mất" },
+                { jp: "はらいます", kanji: "払います", hanviet: "PHẤT", vi: "Trả tiền" },
+                { jp: "かえします", kanji: "返します", hanviet: "PHẢN", vi: "Trả lại" },
+                { jp: "でかけます", kanji: "出かけます", hanviet: "XUẤT", vi: "Ra ngoài" },
+                { jp: "ぬぎます", kanji: "脱ぎます", hanviet: "THOÁT", vi: "Cởi (quần áo, giầy)" },
+                { jp: "もっていきます", kanji: "持って行きます", hanviet: "TRÌ HÀNH", vi: "Mang đi, mang theo" },
+                { jp: "もってきます", kanji: "持って来ます", hanviet: "TRÌ LAI", vi: "Mang đến" },
+                { jp: "しんぱいします", kanji: "心配します", hanviet: "TÂM PHỐI", vi: "Lo lắng" },
+                { jp: "ざんぎょうします", kanji: "残業します", hanviet: "TÀN NGHIỆP", vi: "Làm thêm, làm quá giờ" },
+                { jp: "しゅっちょうします", kanji: "出張します", hanviet: "XUẤT TRƯƠNG", vi: "Đi công tác" },
+                { jp: "くすりをのみます", kanji: "薬を飲みます", hanviet: "DƯỢC ẨM", vi: "Uống thuốc" },
+                { jp: "たいせつ", kanji: "大切", hanviet: "ĐẠI THIẾT", vi: "Quan trọng, quý giá" },
+                { jp: "だいじょうぶ", kanji: "大丈夫", hanviet: "ĐẠI TRƯỢNG PHU", vi: "Không sao, không vấn đề gì" },
+                { jp: "あぶない", kanji: "危ない", hanviet: "NGUY", vi: "Nguy hiểm" },
+                { jp: "きんえん", kanji: "禁煙", hanviet: "CẤM YÊN", vi: "Cấm hút thuốc" },
+                { jp: "ほけんしょう", kanji: "健康保険証", hanviet: "BẢO HIỂM CHỨNG", vi: "Thẻ bảo hiểm" },
+                { jp: "ねつ", kanji: "熱", hanviet: "NHIỆT", vi: "Sốt" },
+                { jp: "びょうき", kanji: "病気", hanviet: "BỆNH KHÍ", vi: "Ốm, bệnh" },
+                { jp: "くすり", kanji: "薬", hanviet: "DƯỢC", vi: "Thuốc" },
+                { jp: "おふろ", kanji: "", hanviet: "", vi: "Bồn tắm" },
+                { jp: "うわぎ", kanji: "上着", hanviet: "THƯỢNG TRƯỚC", vi: "Áo khoác" },
+                { jp: "したぎ", kanji: "下着", hanviet: "HẠ TRƯỚC", vi: "Quần áo lót" },
+                { jp: "までに", kanji: "", hanviet: "", vi: "Trước (thời hạn)" },
+                { jp: "ですから", kanji: "", hanviet: "", vi: "Vì thế, vì vậy, do đó" },
+                { jp: "どうしましたか", kanji: "", hanviet: "", vi: "Anh chị bị làm sao" },
+                { jp: "のど", kanji: "", hanviet: "", vi: "Họng" },
+                { jp: "いたい", kanji: "痛い", hanviet: "THỐNG", vi: "Bị đau" },
+                { jp: "かぜ", kanji: "風邪", hanviet: "PHONG TÀ", vi: "Bị cảm, cúm" }
+            ],
+            18: [
+                { jp: "できます", kanji: "出来ます", hanviet: "XUẤT LAI", vi: "Có thể" },
+                { jp: "あらいます", kanji: "洗います", hanviet: "TẨY", vi: "Rửa" },
+                { jp: "ひきます", kanji: "弾きます", hanviet: "ĐÀN, ĐẠN", vi: "Chơi nhạc cụ" },
+                { jp: "うたいます", kanji: "歌います", hanviet: "CA", vi: "Hát" },
+                { jp: "あつめます", kanji: "集めます", hanviet: "TẬP", vi: "Sưu tầm, thu thập" },
+                { jp: "すてます", kanji: "捨てます", hanviet: "XẢ", vi: "Vứt, bỏ đi" },
+                { jp: "かえます", kanji: "換えます", hanviet: "HOÁN", vi: "Đổi" },
+                { jp: "うんてんします", kanji: "運転します", hanviet: "VẬN CHUYỂN", vi: "Lái xe" },
+                { jp: "よやくします", kanji: "予約します", hanviet: "DỰ ƯỚC", vi: "Đặt chỗ, đặt trước" },
+                { jp: "ピアノ", kanji: "", hanviet: "", vi: "Đàn Piano" },
+                { jp: "メートル", kanji: "", hanviet: "", vi: "Mét" },
+                { jp: "げんきん", kanji: "現金", hanviet: "HIỆN KIM", vi: "Tiền mặt" },
+                { jp: "しゅみ", kanji: "趣味", hanviet: "THÚ VỊ", vi: "Sở thích, thú vui" },
+                { jp: "にっき", kanji: "日記", hanviet: "NHẬT KÝ", vi: "Nhật ký" },
+                { jp: "おいのり", kanji: "お祈り", hanviet: "KỲ", vi: "Việc cầu nguyện" },
+                { jp: "かちょう", kanji: "課長", hanviet: "KHÓA TRƯỞNG", vi: "Tổ trưởng" },
+                { jp: "ぶちょう", kanji: "部長", hanviet: "BỘ TRƯỞNG", vi: "Trưởng phòng" },
+                { jp: "しゃちょう", kanji: "社長", hanviet: "XÃ TRƯỞNG", vi: "Giám đốc" },
+                { jp: "どうぶつ", kanji: "動物", hanviet: "ĐỘNG VẬT", vi: "Động vật" },
+                { jp: "うま", kanji: "馬", hanviet: "MÃ", vi: "Ngựa" },
+                { jp: "インターネット", kanji: "", hanviet: "", vi: "Internet" },
+                { jp: "とくに", kanji: "特に", hanviet: "ĐẶC", vi: "Đặc biệt" },
+                { jp: "それはおもしろいですね", kanji: "", hanviet: "", vi: "Hay thật nhỉ" },
+                { jp: "なかなか", kanji: "", hanviet: "", vi: "Khó mà, không dễ, mãi mà" },
+                { jp: "ほんとうですか", kanji: "本当ですか", hanviet: "BẢN ĐƯƠNG", vi: "Thật không ạ" },
+                { jp: "ぜひ", kanji: "是非", hanviet: "THỊ PHI", vi: "Nhất định, thực sự" }
+            ],
+            19: [
+                { jp: "のぼります", kanji: "山に登ります", hanviet: "SƠN ĐĂNG", vi: "Leo" },
+                { jp: "とまります", kanji: "ホテルに泊まります", hanviet: "BẠC", vi: "Trọ, ở lại, qua đêm" },
+                { jp: "そうじします", kanji: "掃除します", hanviet: "TẢO TRỪ", vi: "Dọn vệ sinh" },
+                { jp: "せんたくします", kanji: "洗濯します", hanviet: "TẤY TRẠC", vi: "Giặt giũ" },
+                { jp: "れんしゅうします", kanji: "練習します", hanviet: "LUYỆN TẬP", vi: "Luyện tập, thực hành" },
+                { jp: "なります", kanji: "成ります", hanviet: "THÀNH", vi: "Trở thành, trở nên" },
+                { jp: "ねむい", kanji: "眠い", hanviet: "MIÊN", vi: "Buồn ngủ" },
+                { jp: "つよい", kanji: "強い", hanviet: "CƯỜNG", vi: "Mạnh" },
+                { jp: "よわい", kanji: "弱い", hanviet: "NHƯỢC", vi: "Yếu" },
+                { jp: "れんしゅう", kanji: "練習", hanviet: "LUYỆN TẬP", vi: "Sự luyện tập" },
+                { jp: "ゴルフ", kanji: "", hanviet: "", vi: "Golf" },
+                { jp: "すもう", kanji: "相撲", hanviet: "TƯƠNG PHÁC", vi: "Vật Sumo" },
+                { jp: "ひ", kanji: "日", hanviet: "NHẬT", vi: "Ngày" },
+                { jp: "ちょうし", kanji: "調子", hanviet: "ĐIỀU TỬ", vi: "Tình trạng, trạng thái" },
+                { jp: "いちども", kanji: "一度も", hanviet: "NHẤT ĐỘ", vi: "Chưa lần nào" },
+                { jp: "だんだん", kanji: "段々", hanviet: "ĐOẠN", vi: "Dần dần" },
+                { jp: "もうすぐ", kanji: "", hanviet: "", vi: "Sắp" },
+                { jp: "おかげさまで", kanji: "", hanviet: "", vi: "Nhờ ơn anh chị mà" },
+                { jp: "でも", kanji: "", hanviet: "", vi: "Nhưng" },
+                { jp: "かんぱい", kanji: "乾杯", hanviet: "CAN BỘI", vi: "Nâng cốc, cạn chén" },
+                { jp: "ダイエット", kanji: "", hanviet: "", vi: "Ăn kiêng, giảm cân" },
+                { jp: "むり", kanji: "無理", hanviet: "VÔ LÝ", vi: "Không thể, quá sức" },
+                { jp: "からだにいい", kanji: "体にいい", hanviet: "THỂ", vi: "Tốt cho sức khỏe" }
+            ],
+            20: [
+                { jp: "いります", kanji: "ビザが要ります", hanviet: "YẾU", vi: "Cần thị thực (visa)" },
+                { jp: "しらべます", kanji: "調べます", hanviet: "ĐIỀU", vi: "Tìm hiểu, điều tra" },
+                { jp: "しゅうりします", kanji: "修理します", hanviet: "TU LÝ", vi: "Sửa chữa, tu sửa" },
+                { jp: "ぼく", kanji: "僕", hanviet: "BỘC, PHÓ", vi: "Tớ" },
+                { jp: "きみ", kanji: "君", hanviet: "QUÂN", vi: "Cậu, bạn" },
+                { jp: "くん", kanji: "君", hanviet: "QUÂN", vi: "Anh, cậu" },
+                { jp: "うん", kanji: "", hanviet: "", vi: "Ừ" },
+                { jp: "ううん", kanji: "", hanviet: "", vi: "Không" },
+                { jp: "きもの", kanji: "着物", hanviet: "TRƯỚC VẬT", vi: "Kimono" },
+                { jp: "ビザ", kanji: "", hanviet: "", vi: "Thị thực, Visa" },
+                { jp: "げんきん", kanji: "現金", hanviet: "HIỆN KIM", vi: "Tiền mặt" },
+                { jp: "はじめ", kanji: "始め", hanviet: "THỦY", vi: "Ban đầu, đầu tiên" },
+                { jp: "おわり", kanji: "終わり", hanviet: "CHUNG", vi: "Kết thúc" },
+                { jp: "こっち", kanji: "", hanviet: "", vi: "Phía này, chỗ này" },
+                { jp: "そっち", kanji: "", hanviet: "", vi: "Phía đó, chỗ đó" },
+                { jp: "あっち", kanji: "", hanviet: "", vi: "Phía kia, chỗ kia" },
+                { jp: "どっち", kanji: "", hanviet: "", vi: "Cái nào, phía nào, đâu" },
+                { jp: "みんなで", kanji: "", hanviet: "", vi: "Mọi người cùng" },
+                { jp: "けど", kanji: "", hanviet: "", vi: "Nhưng" },
+                { jp: "おなかがいっぱいです", kanji: "", hanviet: "", vi: "Tôi no rồi" },
+                { jp: "よかったら", kanji: "", hanviet: "", vi: "Nếu anh chị thích thì" },
+                { jp: "いろいろ", kanji: "", hanviet: "", vi: "Nhiều thứ" }
+            ],
+            21: [
+                { jp: "おもいます", kanji: "思います", hanviet: "TƯ", vi: "Nghĩ, nghĩ rằng" },
+                { jp: "いいます", kanji: "言います", hanviet: "NGÔN", vi: "Nói" },
+                { jp: "かちます", kanji: "勝ちます", hanviet: "THẮNG", vi: "Thắng, chiến thắng" },
+                { jp: "まけます", kanji: "負けます", hanviet: "PHỤ", vi: "Thua" },
+                { jp: "あります", kanji: "お祭りが有ります", hanviet: "TẾ", vi: "Lễ hội được tổ chức" },
+                { jp: "やくにたちます", kanji: "役に立ちます", hanviet: "DỊCH LẬP", vi: "Có ích, có lợi" },
+                { jp: "うごきます", kanji: "動きます", hanviet: "ĐỘNG", vi: "Hoạt động, cử động" },
+                { jp: "やめます", kanji: "会社を辞めます", hanviet: "HỘI XÃ TỪ", vi: "Nghỉ việc" },
+                { jp: "きをつけます", kanji: "気をつけます", hanviet: "KHÍ", vi: "Chú ý, cẩn thận" },
+                { jp: "りゅうがくします", kanji: "留学します", hanviet: "LƯU HỌC", vi: "Du học" },
+                { jp: "むだ", kanji: "無駄", hanviet: "VÔ ĐÀ", vi: "Vô ích, lãng phí" },
+                { jp: "ふべん", kanji: "不便", hanviet: "BẤT TIỆN", vi: "Bất tiện" },
+                { jp: "すごい", kanji: "", hanviet: "", vi: "Ghê, giỏi, khủng khiếp" },
+                { jp: "ほんとう", kanji: "本当", hanviet: "BẢN ĐƯƠNG", vi: "Sự thật" },
+                { jp: "うそ", kanji: "嘘", hanviet: "", vi: "Nói dối" },
+                { jp: "じどうしゃ", kanji: "自動車", hanviet: "TỰ ĐỘNG XA", vi: "Ô tô" },
+                { jp: "こうつう", kanji: "交通", hanviet: "GIAO THÔNG", vi: "Giao thông" },
+                { jp: "ぶっか", kanji: "物価", hanviet: "VẬT GIÁ", vi: "Vật giá, giá cả" },
+                { jp: "ほうそう", kanji: "放送", hanviet: "PHÓNG TỐNG", vi: "Phát thanh, phát sóng" },
+                { jp: "ニュース", kanji: "", hanviet: "", vi: "Bản tin, tin tức" },
+                { jp: "アニメ", kanji: "", hanviet: "", vi: "Anime" },
+                { jp: "マンガ", kanji: "漫画", hanviet: "MẠN HỌA", vi: "Truyện tranh" },
+                { jp: "デザイン", kanji: "", hanviet: "", vi: "Thiết kế" },
+                { jp: "ゆめ", kanji: "夢", hanviet: "MỘNG", vi: "Giấc mơ" },
+                { jp: "しあい", kanji: "試合", hanviet: "THÍ HỢP", vi: "Trận đấu" },
+                { jp: "てんさい", kanji: "天才", hanviet: "THIÊN TÀI", vi: "Thiên tài" },
+                { jp: "いけん", kanji: "意見", hanviet: "Ý KIẾN", vi: "Ý kiến" },
+                { jp: "はなし", kanji: "話", hanviet: "THOẠI", vi: "Câu chuyện" },
+                { jp: "ちきゅう", kanji: "地球", hanviet: "ĐỊA CẦU", vi: "Trái đất" },
+                { jp: "つき", kanji: "月", hanviet: "NGUYỆT", vi: "Mặt trăng" },
+                { jp: "さいきん", kanji: "最近", hanviet: "TỐI CẬN", vi: "Gần đây" },
+                { jp: "たぶん", kanji: "多分", hanviet: "ĐA PHÂN", vi: "Có lẽ, chắc là" },
+                { jp: "きっと", kanji: "", hanviet: "", vi: "Chắc chắn" },
+                { jp: "ほんとうに", kanji: "本当に", hanviet: "BẢN ĐƯƠNG", vi: "Thật là, quả thật, đúng là" },
+                { jp: "そんなに", kanji: "", hanviet: "", vi: "Không lắm" },
+                { jp: "について", kanji: "", hanviet: "", vi: "Về" },
+                { jp: "でものみませんか", kanji: "でも飲みませんか", hanviet: "ẨM", vi: "Anh uống gì đó nhé" },
+                { jp: "もちろん", kanji: "", hanviet: "", vi: "Tất nhiên" },
+                { jp: "カンガルー", kanji: "", hanviet: "", vi: "Chuột túi" }
+            ],
+            22: [
+                { jp: "きます", kanji: "シャツを着ます", hanviet: "TRƯỚC", vi: "Mặc áo sơ mi" },
+                { jp: "はきます", kanji: "靴を履きます", hanviet: "NGOA LÝ", vi: "Mặc quần, xỏ giầy" },
+                { jp: "かぶります", kanji: "帽子を被ります", hanviet: "MẠO TỬ BỊ", vi: "Đội mũ" },
+                { jp: "かけます", kanji: "眼鏡を掛けます", hanviet: "NHÃN KÍNH QUẢI", vi: "Đeo kính" },
+                { jp: "します", kanji: "", hanviet: "", vi: "Thắt cà vạt" },
+                { jp: "うまれます", kanji: "生まれます", hanviet: "SINH", vi: "Được sinh ra" },
+                { jp: "わたしたち", kanji: "私たち", hanviet: "TƯ", vi: "Chúng ta, chúng tôi" },
+                { jp: "コート", kanji: "", hanviet: "", vi: "Áo choàng ngoài" },
+                { jp: "セーター", kanji: "", hanviet: "", vi: "Áo len" },
+                { jp: "スーツ", kanji: "", hanviet: "", vi: "Bộ com lê" },
+                { jp: "ぼうし", kanji: "帽子", hanviet: "MẠO TỬ", vi: "Mũ" },
+                { jp: "めがね", kanji: "眼鏡", hanviet: "NHÃN KÍNH", vi: "Kính" },
+                { jp: "ケーキ", kanji: "", hanviet: "", vi: "Bánh kem" },
+                { jp: "おべんとう", kanji: "お弁当", hanviet: "BIỆN ĐƯƠNG", vi: "Cơm hộp" },
+                { jp: "ロボット", kanji: "", hanviet: "", vi: "Robot" },
+                { jp: "ユーモア", kanji: "", hanviet: "", vi: "Tính hài hước" },
+                { jp: "つごう", kanji: "都合", hanviet: "ĐÔ HỢP", vi: "Thich hop" },
+                { jp: "よく", kanji: "", hanviet: "", vi: "Thường, rất, hay" },
+                { jp: "えーと", kanji: "", hanviet: "", vi: "À, để tôi xem" },
+                { jp: "おめでとう", kanji: "", hanviet: "", vi: "Chúc mừng" },
+                { jp: "おさがしですか", kanji: "お探しですか", hanviet: "THÁM", vi: "Anh chị tìm gì thế ạ" },
+                { jp: "では", kanji: "", hanviet: "", vi: "Thế thì, thế là" },
+                { jp: "こちら", kanji: "", hanviet: "", vi: "Cái này" },
+                { jp: "やちん", kanji: "家賃", hanviet: "GIA NHẪM", vi: "Tiền thuê nhà" },
+                { jp: "わしつ", kanji: "和室", hanviet: "HÒA THẤT", vi: "Phòng kiểu nhật" },
+                { jp: "おしいれ", kanji: "押し入れ", hanviet: "ÁP NHẬP", vi: "Chỗ để chăn gối" },
+                { jp: "ふとん", kanji: "布団", hanviet: "BỐ ĐOÀN", vi: "Chăn, đệm kiểu Nhật" },
+                { jp: "パリ", kanji: "", hanviet: "", vi: "Paris" }
+            ],
+            23: [
+                { jp: "ききます", kanji: "先生に聞きます", hanviet: "TIÊN SINH VĂN", vi: "Hỏi thầy cô giáo" },
+                { jp: "まわします", kanji: "回します", hanviet: "HỒI", vi: "Vặn, xoay" },
+                { jp: "ひきます", kanji: "引きます", hanviet: "DẪN", vi: "Kéo" },
+                { jp: "かえます", kanji: "変えます", hanviet: "BIẾN", vi: "Đổi" },
+                { jp: "さわります", kanji: "ドアに触ります", hanviet: "XÚC", vi: "Sờ, chạm vào" },
+                { jp: "でます", kanji: "お釣りが出ます", hanviet: "ĐIẾU XUẤT", vi: "thừa ra" },
+                { jp: "あるきます", kanji: "道を歩きます", hanviet: "ĐẠO BỘ", vi: "Đi bộ" },
+                { jp: "わたります", kanji: "橋を渡ります", hanviet: "KIỀU ĐỘ", vi: "Băng qua" },
+                { jp: "まがります", kanji: "右へ曲がります", hanviet: "HỮU KHÚC", vi: "Rẽ" },
+                { jp: "さびしい", kanji: "寂しい", hanviet: "TỊCH", vi: "Buồn, cô đơn" },
+                { jp: "おゆ", kanji: "お湯", hanviet: "THANG", vi: "Nước sôi, nước nóng" },
+                { jp: "おと", kanji: "音", hanviet: "ÂM", vi: "Tiếng, âm thanh" },
+                { jp: "サイズ", kanji: "", hanviet: "", vi: "Size, kích cỡ" },
+                { jp: "こしょう", kanji: "故障", hanviet: "CỐ CHƯỚNG", vi: "Hỏng, sự cố" },
+                { jp: "みち", kanji: "道", hanviet: "ĐẠO", vi: "Đường" },
+                { jp: "こうさてん", kanji: "交差点", hanviet: "GIAO SAI ĐIỂM", vi: "Ngã tư" },
+                { jp: "しんごう", kanji: "信号", hanviet: "TÍN HIỆU", vi: "Đèn giao thông" },
+                { jp: "かど", kanji: "角", hanviet: "GIÁC", vi: "Góc" },
+                { jp: "はし", kanji: "橋", hanviet: "KIỀU", vi: "Cầu" },
+                { jp: "ちゅうしゃじょう", kanji: "駐車場", hanviet: "TRÚ XA TRƯỜNG", vi: "Bãi đỗ xe" },
+                { jp: "たてもの", kanji: "建物", hanviet: "KIẾN VẬT", vi: "Tòa nhà" },
+                { jp: "なんかいも", kanji: "何回も", hanviet: "HÀ HỒI", vi: "Nhiều lần" },
+                { jp: "め", kanji: "一目", hanviet: "MỤC", vi: "Thứ" }
+            ],
+            24: [
+                { jp: "くれます", kanji: "", hanviet: "", vi: "Cho, tặng (cho mình)" },
+                { jp: "なおします", kanji: "直します", hanviet: "TRỰC", vi: "Sửa, chỉnh lại" },
+                { jp: "つれていきます", kanji: "連れて行きます", hanviet: "LIÊN HÀNH", vi: "Đưa đi, dẫn đi" },
+                { jp: "つれてきます", kanji: "連れて来ます", hanviet: "LIÊN LAI", vi: "Đưa đến, dẫn đến" },
+                { jp: "おくります", kanji: "人を送ります", hanviet: "NHÂN TỐNG", vi: "Tiễn người" },
+                { jp: "しょうかいします", kanji: "紹介します", hanviet: "THIỆU GIỚI", vi: "Giới thiệu" },
+                { jp: "あんないします", kanji: "案内します", hanviet: "ÁN NỘI", vi: "Hướng dẫn, chỉ dẫn" },
+                { jp: "せつめいします", kanji: "説明します", hanviet: "THUYẾT MINH", vi: "Thuyết minh, giải thích" },
+                { jp: "おじいさん", kanji: "お祖父さん", hanviet: "TỔ PHỤ", vi: "Ông nội, ông ngoại, ông cụ" },
+                { jp: "おばあさん", kanji: "お祖母さん", hanviet: "TỔ MẪU", vi: "Bà nội, bà ngoại, bà cụ" },
+                { jp: "じゅんび", kanji: "準備", hanviet: "CHUẨN BỊ", vi: "Sự chuẩn bị" },
+                { jp: "ひっこし", kanji: "引越し", hanviet: "DẪN VIỆT", vi: "Việc chuyển nhà" },
+                { jp: "おかし", kanji: "お菓子", hanviet: "QUẢ TỬ", vi: "Bánh kẹo" },
+                { jp: "ホームステイ", kanji: "", hanviet: "", vi: "Homestay" },
+                { jp: "ぜんぶ", kanji: "全部", hanviet: "TOÀN BỘ", vi: "Tất cả, toàn bộ" },
+                { jp: "じぶんで", kanji: "自分で", hanviet: "TỰ PHÂN", vi: "Tự mình" },
+                { jp: "ほかに", kanji: "他に", hanviet: "THA", vi: "Ngoài ra, bên cạnh đó" }
+            ],
+            25: [
+                { jp: "かんがえます", kanji: "考えます", hanviet: "KHẢO", vi: "Suy nghĩ" },
+                { jp: "つきます", kanji: "着きます", hanviet: "TRƯỚC", vi: "Đến nơi" },
+                { jp: "としをとります", kanji: "年を取ります", hanviet: "NIÊN THỦ", vi: "Có tuổi, thêm tuổi" },
+                { jp: "たります", kanji: "足ります", hanviet: "TÚC", vi: "Đủ" },
+                { jp: "いなか", kanji: "田舎", hanviet: "ĐIỀN XÁ", vi: "Quê, nông thôn" },
+                { jp: "チャンス", kanji: "", hanviet: "", vi: "Cơ hội" },
+                { jp: "おく", kanji: "億", hanviet: "ỨC", vi: "Trăm triệu" },
+                { jp: "もし", kanji: "", hanviet: "", vi: "Nếu" },
+                { jp: "いみ", kanji: "意味", hanviet: "Ý VỊ", vi: "Ý nghĩa" },
+                { jp: "もしもし", kanji: "", hanviet: "", vi: "A lô" },
+                { jp: "てんきん", kanji: "転勤", hanviet: "CHUYỂN CẦN", vi: "Chuyển chỗ làm" },
+                { jp: "こと", kanji: "", hanviet: "", vi: "Việc, điều" },
+                { jp: "ひま", kanji: "暇", hanviet: "HẠ", vi: "Rảnh rỗi" },
+                { jp: "おせわになりました", kanji: "お世話になりました", hanviet: "THẾ THOẠI", vi: "Xin cảm ơn về tất cả những gì Anh Chị đã giúp đỡ tôi" },
+                { jp: "がんばります", kanji: "頑張ります", hanviet: "NGOAN TRƯƠNG", vi: "Cố gắng" },
+                { jp: "ベトナム", kanji: "", hanviet: "", vi: "Việt Nam" }
+            ],
+            26: [
+                { jp: "みます", kanji: "診ます", hanviet: "CHẨN", romaji: "mimasu", vi: "Khám bệnh" },
+                { jp: "さがします", kanji: "探します", hanviet: "THÁM", romaji: "sagashimasu", vi: "Tìm kiếm" },
+                { jp: "おくれます", kanji: "遅れます", hanviet: "TRÌ", romaji: "okuremasu", vi: "Muộn, trễ (cuộc hẹn)" },
+                { jp: "まにあいます", kanji: "間に合います", hanviet: "GIAN HỢP", romaji: "maniamasu", vi: "Kịp (thời gian)" },
+                { jp: "やります", kanji: "やります", hanviet: "", romaji: "yarimasu", vi: "Làm, thực hiện" },
+                { jp: "さんかします", kanji: "参加します", hanviet: "THAM GIA", romaji: "sankashimasu", vi: "Tham gia (bữa tiệc)" },
+                { jp: "もうしこみます", kanji: "申し込みます", hanviet: "THÂN TỔ", romaji: "moushikomimasu", vi: "Đăng ký" },
+                { jp: "つごうがいい", kanji: "都合が良い", hanviet: "ĐÔ HỢP LƯƠNG", romaji: "tsugou ga ii", vi: "Thuận tiện thời gian" }
+            ],
+            27: [
+                { jp: "かいます", kanji: "飼います", hanviet: "TỰ", romaji: "kaimasu", vi: "Nuôi (động vật)" },
+                { jp: "たてます", kanji: "建てます", hanviet: "KIẾN", romaji: "tatemasu", vi: "Xây dựng" },
+                { jp: "はしります", kanji: "走ります", hanviet: "TẨU", romaji: "hashirimasu", vi: "Chạy (trên đường)" },
+                { jp: "とり meす", kanji: "取ります", hanviet: "THỦ", romaji: "torimasu", vi: "Xin (nghỉ phép)" },
+                { jp: "みえます", kanji: " me見えます", hanviet: "KIẾN", romaji: "miemasu", vi: "Nhìn thấy được" },
+                { jp: "きこえます", kanji: "聞こえます", hanviet: "VĂN", romaji: "kikoemasu", vi: "Nghe thấy được" },
+                { jp: "できます", kanji: "出来ます", hanviet: "XUẤT LAI", romaji: "dekimasu", vi: "Hoàn thành, làm xong" },
+                { jp: "ひらきます", kanji: "開きます", hanviet: "KHAI", romaji: "hirakimasu", vi: "Mở (lớp học)" }
+            ],
+            28: [
+                { jp: "うれます", kanji: "売れます", hanviet: "MẠI", romaji: "uremasu", vi: "Bán chạy" },
+                { jp: "おどります", kanji: "踊ります", hanviet: "DŨNG", romaji: "odorimasu", vi: "Nhảy, múa" },
+                { jp: "かみます", kanji: "噛みます", hanviet: "NẠO", romaji: "kamimasu", vi: "Nhai, cắn" },
+                { jp: "えらびます", kanji: "選びます", hanviet: "TUỂN", romaji: "erabimasu", vi: "Chọn lựa" },
+                { jp: "かよいます", kanji: "通います", hanviet: "THÔNG", romaji: "kayoimasu", vi: "Đi lại thường xuyên (trường/sở)" },
+                { jp: "メモします", kanji: "メモします", hanviet: "", romaji: "memoshimasu", vi: "Ghi chép" },
+                { jp: "まじめ", kanji: "真面目", hanviet: "CHÂN DIỆN MỤC", romaji: "majime", vi: "Nghiêm túc, ngoan ngoãn" },
+                { jp: "熱心", kanji: "熱心", hanviet: "NHIỆT TÂM", romaji: "nesshin", vi: "Nhiệt tình, tâm huyết" }
+            ],
+            29: [
+                { jp: "あきます", kanji: "開きます", hanviet: "KHAI", romaji: "akimasu", vi: "Tự mở (cửa)" },
+                { jp: "しまります", kanji: "閉まります", hanviet: "BẾ", romaji: "shimarimasu", vi: "Tự đóng (cửa)" },
+                { jp: "つきます", kanji: "点きます", hanviet: "ĐIỂM", romaji: "tsukimasu", vi: "Bật sáng (đèn)" },
+                { jp: "きえます", kanji: "消えます", hanviet: "TIÊU", romaji: "kiemasu", vi: "Tắt (đèn)" },
+                { jp: "こみます", kanji: "込めます", hanviet: "NHẬP", romaji: "komimasu", vi: "Đông đúc (đường)" },
+                { jp: "すきます", kanji: "空きます", hanviet: "KHÔNG", romaji: "sukimasu", vi: "Vắng vẻ" },
+                { jp: "こわれます", kanji: "壊れます", hanviet: "HOẠI", romaji: "kowaremasu", vi: "Bị hỏng (ghế)" },
+                { jp: "われます", kanji: "割れます", hanviet: "CÁT", romaji: "waremasu", vi: "Bị vỡ (cốc)" }
+            ],
+            30: [
+                { jp: "はります", kanji: "貼ります", hanviet: "THIẾP", romaji: "harimasu", vi: "Dán, dính" },
+                { jp: "かけます", kanji: "掛けます", hanviet: "QUẢI", romaji: "kakemasu", vi: "Treo" },
+                { jp: "かざります", kanji: "飾ります", hanviet: "SỨC", romaji: "kazarimasu", vi: "Trang trí" },
+                { jp: "ならべます", kanji: "並べます", hanviet: "TỊNH", romaji: "narabemasu", vi: "Xếp thành hàng" },
+                { jp: "うえ meす", kanji: "植えます", hanviet: "THỰC", romaji: "uemasu", vi: "Trồng (cây)" },
+                { jp: "もどします", kanji: "戻します", hanviet: "LỆ", romaji: "modoshimasu", vi: "Đưa về vị trí cũ" },
+                { jp: "まとめます", kanji: "まとめます", hanviet: "", romaji: "matomemasu", vi: "Tóm tắt, thu dọn" },
+                { jp: "かたづけます", kanji: "片付けます", hanviet: "PHIẾN PHÓ", romaji: "katadukemasu", vi: "Dọn dẹp ngăn nắp" }
+            ],
+            31: [
+                { jp: "はじまります", kanji: "始まります", hanviet: "THỦY", romaji: "hajimarimasu", vi: "Bắt đầu" },
+                { jp: "つづけます", kanji: " me続けます", hanviet: "TỤC", romaji: "tsudukemasu", vi: "Tiếp tục" },
+                { jp: "みつかります", kanji: "見つかります", hanviet: "KIẾN", romaji: "mitsukarimasu", vi: "Tim thấy" },
+                { jp: "うけます", kanji: "受けて", hanviet: "THỤ", romaji: "ukemasu", vi: "Dự thi (kỳ thi)" },
+                { jp: "にゅうがくします", kanji: "入学します", hanviet: "NHẬP HỌC", romaji: "nyuugakushimasu", vi: "Nhập học" },
+                { jp: "そつぎょうします", kanji: "卒業します", hanviet: "TỐT NGHIỆP", romaji: "sotsugyoushimasu", vi: "Tốt nghiệp" },
+                { jp: "きゅうけいします", kanji: "休憩します", hanviet: "HƯU KHÁI", romaji: "kyuukeishimasu", vi: "Nghỉ giải lao" }
+            ],
+            32: [
+                { jp: "うんどうします", kanji: "運動します", hanviet: "VẬN ĐỘNG", romaji: "undoushimasu", vi: "Tập thể dục" },
+                { jp: "せいこうします", kanji: "成功します", hanviet: "THÀNH CÔNG", romaji: "seikoushimasu", vi: "Thành công" },
+                { jp: "しっぱいします", kanji: "失敗します", hanviet: "THẤT BẠI", romaji: "shippaishimasu", vi: "Thất bại (kỳ thi)" },
+                { jp: "ごうかくします", kanji: "合格します", hanviet: "HỢP CÁCH", romaji: "goukaku-shimasu", vi: "Đỗ, vượt qua (kỳ thi)" },
+                { jp: "やみます", kanji: "止みます", hanviet: "CHỈ", romaji: "yamimasu", vi: "Tạnh, ngừng (mưa)" },
+                { jp: "はれます", kanji: "晴れます", hanviet: "TÌNH", romaji: "haremasu", vi: "Nắng, quang mây" },
+                { jp: "くもります", kanji: "曇ります", hanviet: "ĐẦM", romaji: "kumorimasu", vi: "Nhiều mây, u uất" }
+            ],
+            33: [
+                { jp: "にげます", kanji: "逃げます", hanviet: "ĐÀO", romaji: "nigemasu", vi: "Chạy trốn, bỏ chạy" },
+                { jp: "さわぎます", kanji: "騒ぎます", hanviet: "TAO", romaji: "sawagimasu", vi: "Làm ồn, làm ầm ĩ" },
+                { jp: "あきらめます", kanji: "諦めます", hanviet: "ĐẾ", romaji: "akiramemasu", vi: "Từ bỏ, chịu thua" },
+                { jp: "なげます", kanji: "投げて", hanviet: "ĐẦU", romaji: "nagemasu", vi: "Ném" },
+                { jp: "まもります", kanji: "守ります", hanviet: "THỦ", romaji: "mamorimasu", vi: "Bảo vệ, tuân thủ" },
+                { jp: "あげます", kanji: " me上げます", hanviet: "THƯỢNG", romaji: "agemasu", vi: "Nâng lên, tăng giá" },
+                { jp: "さげます", kanji: "下げます", hanviet: "HẠ", romaji: "sagemasu", vi: "Hạ xuống, giảm giá" }
+            ],
+            34: [
+                { jp: "みがきます", kanji: "磨きます", hanviet: "MA", romaji: "migakimasu", vi: "Mài, đánh (răng)" },
+                { jp: "くみたてます", kanji: "組み立てます", hanviet: "TỔ LẬP", romaji: "kumitatemasu", vi: "Lắp ráp" },
+                { jp: "おり meす", kanji: "折ります", hanviet: "CHIẾT", romaji: "orimasu", vi: "Gập, bẻ gãy" },
+                { jp: "きがつきます", kanji: "気がつきます", hanviet: "KHÍ", romaji: "ki ga tsukimasu", vi: "Nhận ra" },
+                { jp: "つけます", kanji: "つけます", hanviet: "", romaji: "tsukemasu", vi: "Chấm (nước chấm)" },
+                { jp: "みつかります", kanji: "見つかります", hanviet: "KIẾN", romaji: "mitsukarimasu", vi: "Được tìm thấy" }
+            ],
+            35: [
+                { jp: "さきます", kanji: "咲きます", hanviet: "TIẾO", romaji: "sakimasu", vi: "Nở (hoa)" },
+                { jp: "かわります", kanji: "変わります", hanviet: "BIẾN", romaji: "kawarimasu", vi: "Thay đổi (màu sắc)" },
+                { jp: "こまります", kanji: "困ります", hanviet: "KHỐN", romaji: "komarimasu", vi: "Rắc rối, khó khăn" },
+                { jp: "つけます", kanji: "付けます", hanviet: "PHÓ", romaji: "tsukemasu", vi: "Vẽ, đánh dấu" },
+                { jp: "ひろいます", kanji: "拾います", hanviet: "THẬP", romaji: "hiroimasu", vi: "Nhặt, lượm" },
+                { jp: "かかります", kanji: "掛かります", hanviet: "QUẢI", romaji: "kakarimasu", vi: "Bật (điện thoại, chuông)" }
+            ],
+            36: [
+                { jp: "あいます", kanji: "遭います", hanviet: "TAO", romaji: "aimasu", vi: "Gặp phải (tai nạn)" },
+                { jp: "貯金します", kanji: "貯金します", hanviet: "TRỮ KIM", romaji: "chokinshimasu", vi: "Tiết kiệm tiền" },
+                { jp: "すぎます", kanji: "過ぎます", hanviet: "QUÁ", romaji: "sugimasu", vi: "Quá (7 giờ)" },
+                { jp: "なれます", kanji: "慣れます", hanviet: "QUÁN", romaji: "naremasu", vi: "Quen với (cuộc sống)" },
+                { jp: "くさります", kanji: "腐ります", hanviet: "HỦ", romaji: "kusarimasu", vi: "Thối, ôi thiu" }
+            ],
+            37: [
+                { jp: "ほめます", kanji: "褒めます", hanviet: "BAO", romaji: "homemasu", vi: "Khen ngợi" },
+                { jp: "しかります", kanji: "叱ります", hanviet: "SẤT", romaji: "shikarimasu", vi: "Mắng mắng" },
+                { jp: "さそいます", kanji: "誘います", hanviet: "DỤ", romaji: "sasoimasu", vi: "Rủ rê, mời" },
+                { jp: "おこします", kanji: "起こします", hanviet: "KHỞI", romaji: "okoshimasu", vi: "Đánh thức ai dậy" },
+                { jp: "たのみます", kanji: "頼みます", hanviet: "LẠI", romaji: "tanomimasu", vi: "Nhờ vả" },
+                { jp: "ちょうさします", kanji: "調査します", hanviet: "ĐIỀU TRA", romaji: "chousashimasu", vi: "Điều tra" }
+            ],
+            38: [
+                { jp: "さんかします", kanji: "参加します", hanviet: "THAM GIA", romaji: "sankashimasu", vi: "Tham gia" },
+                { jp: "そだてます", kanji: "育てます", hanviet: "DỤC", romaji: "sodatemasu", vi: "Nuôi nấng, dạy dỗ" },
+                { jp: "はこびます", kanji: "運びます", hanviet: "VẬN", romaji: "hakobimasu", vi: "Vận chuyển" },
+                { jp: "にゅういんします", kanji: "入院します", hanviet: "NHẬP VIỆN", romaji: "nyuuinshimasu", vi: "Nhập viện" },
+                { jp: "たいいんします", kanji: "退院します", hanviet: "THOÁI VIỆN", romaji: "taiinshimasu", vi: "Xuất viện" }
+            ],
+            39: [
+                { jp: "こたえます", kanji: "答えます", hanviet: "ĐÁP", romaji: "kotaemasu", vi: "Trả lời (câu hỏi)" },
+                { jp: "たおれます", kanji: "倒れます", hanviet: "ĐẢO", romaji: "taoremasu", vi: "Đổ, đổ sập (tòa nhà)" },
+                { jp: "とおります", kanji: "通ります", hanviet: "THÔNG", romaji: "toorimasu", vi: "Đi qua (con đường)" },
+                { jp: "しにます", kanji: "死にます", hanviet: "TỬ", romaji: "shinimasu", vi: "Chết, qua đời" },
+                { jp: "びっくりします", kanji: "びっくりします", hanviet: "", romaji: "bikkurishimasu", vi: "Giật mình, ngạc nhiên" }
+            ],
+            40: [
+                { jp: "かぞえます", kanji: "数えます", hanviet: "SỔ", romaji: "kazoemasu", vi: "Đếm" },
+                { jp: "はかります", kanji: "測ります", hanviet: "TRẮC", romaji: "hakarimasu", vi: "Đo, cân" },
+                { jp: "たしかめます", kanji: "確かめます", hanviet: "XÁC", romaji: "tashikamemasu", vi: "Xác nhận, kiểm tra lại" },
+                { jp: "あいます", kanji: "合います", hanviet: "HỢP", romaji: "aimasu", vi: "Vừa vặn (kích thước)" },
+                { jp: "しゅっぱつします", kanji: "出発します", hanviet: "XUẤT PHÁT", romaji: "shuppatsushimasu", vi: "Xuất phát" }
+            ],
+            41: [
+                { jp: "いただきます", kanji: "いただきます", hanviet: "", romaji: "itadakimasu", vi: "Nhận (khiêm nhường ngữ của moraimasu)" },
+                { jp: "くださいます", kanji: "くださいます", hanviet: "", romaji: "kudasaimasu", vi: "Cho tôi (tôn kính ngữ của kuremasu)" },
+                { jp: "やり meす", kanji: "やります", hanviet: "", romaji: "yarimasu", vi: "Cho (động vật, cây cối)" },
+                { jp: "よびます", kanji: "呼びます", hanviet: "HÔ", romaji: "yobimasu", vi: "Mời, gọi" },
+                { jp: "とりかえます", kanji: "取り替えます", hanviet: "THỦ THẾ", romaji: "torikaemasu", vi: "Đổi lại" }
+            ],
+            42: [
+                { jp: "包みます", kanji: "包みます", hanviet: "BAO", romaji: "tsutsumimasu", vi: "Bọc, gói" },
+                { jp: "沸かします", kanji: "沸かします", hanviet: "PHÍ", romaji: "wakashimasu", vi: "Đun sôi" },
+                { jp: "混ぜます", kanji: "混ぜます", hanviet: "HỖN", romaji: "mazemasu", vi: "Trộn lẫn" },
+                { jp: "計算します", kanji: "計算します", hanviet: "KẾ TOÁN", romaji: "keisanshimasu", vi: "Tính toán" },
+                { jp: "並びます", kanji: "並びます", hanviet: "TỊNH", romaji: "narabimasu", vi: "Xếp hàng" }
+            ],
+            43: [
+                { jp: "ふえます", kanji: "増えます", hanviet: "TĂNG", romaji: "fuemasu", vi: "Tăng lên (dân số)" },
+                { jp: "へります", kanji: "減ります", hanviet: "GIẢM", romaji: "herimasu", vi: "Giảm xuống" },
+                { jp: "あがります", kanji: "上がります", hanviet: "THƯỢNG", romaji: "agarimasu", vi: "Tăng giá" },
+                { jp: "さがります", kanji: "下がります", hanviet: "HẠ", romaji: "sagarimasu", vi: "Giảm giá" },
+                { jp: "きれます", kanji: "切れます", hanviet: "THIẾT", romaji: "kiremasu", vi: "Đứt, đứt (dây)" }
+            ],
+            44: [
+                { jp: "なさいます", kanji: "なさいます", hanviet: "", romaji: "nasaimasu", vi: "Làm (tôn kính của shimasu)" },
+                { jp: "らんになります", kanji: "ご覧になります", hanviet: "LÃM", romaji: "goran ni narimasu", vi: "Xem (tôn kính của mimasu)" },
+                { jp: "おっしゃいます", kanji: "おっしゃいます", hanviet: "", romaji: "osshaimasu", vi: "Nói (tôn kính của iimasu)" },
+                { jp: "めしあがります", kanji: "召し上がります", hanviet: "TRIỆU THƯỢNG", romaji: "meshiagarimasu", vi: "Ăn/Uống (tôn kính)" },
+                { jp: "いらっしゃいます", kanji: "いらっしゃいます", hanviet: "", romaji: "irashaimasu", vi: "Đến/Ở/Đi (tôn kính)" }
+            ],
+            45: [
+                { jp: "まいります", kanji: "参ります", hanviet: "THAM", romaji: "mairimasu", vi: "Đi, đến (khiêm nhường ngữ)" },
+                { jp: "おります", kanji: "おります", hanviet: "", romaji: "orimasu", vi: "Ở, có (khiêm nhường ngữ)" },
+                { jp: "いただきます", kanji: "いただきます", hanviet: "", romaji: "itadakimasu", vi: "Ăn, uống, nhận (khiêm nhường ngữ)" },
+                { jp: "もうします", kanji: "申します", hanviet: "THÂN", romaji: "moushimasu", vi: "Nói, tên là (khiêm nhường ngữ)" },
+                { jp: "いたします", kanji: "いたします", hanviet: "", romaji: "itashimasu", vi: "Làm (khiêm nhường ngữ)" },
+                { jp: "はいけんします", kanji: "拝見します", hanviet: "BÁI KIẾN", romaji: "haikenshimasu", vi: "Xem, nhìn (khiêm nhường ngữ)" },
+                { jp: "ぞんじます", kanji: "存じます", hanviet: "TỒN", romaji: "zonjimasu", vi: "Biết (khiêm nhường ngữ)" }
+            ],
+            46: [
+                { jp: "わたします", kanji: "渡します", hanviet: "ĐỘ", romaji: "watashimasu", vi: "Trao cho, đưa cho" },
+                { jp: "かえってきます", kanji: "帰って来ます", hanviet: "QUY LAI", romaji: "kaettekimasu", vi: "Trở về" },
+                { jp: "でます", kanji: "出ます", hanviet: "XUẤT", romaji: "demasu", vi: "Xuất phát (xe buýt)" },
+                { jp: "とどきます", kanji: "届きます", hanviet: "GIỚI", romaji: "todokimasu", vi: "Được chuyển đến (hàng)" },
+                { jp: "にゅうがくします", kanji: "入学します", hanviet: "NHẬP HỌC", romaji: "nyuugakushimasu", vi: "Nhập học" }
+            ],
+            47: [
+                { jp: "ふきます", kanji: "吹きます", hanviet: "XUY", romaji: "fukimasu", vi: "Thổi (gió)" },
+                { jp: "もえます", kanji: "燃えます", hanviet: "NHIÊN", romaji: "moemasu", vi: "Cháy (rác)" },
+                { jp: "なくなります", kanji: "亡くなります", hanviet: "VONG", romaji: "nakunarimasu", vi: "Qua đời" },
+                { jp: "あつまります", kanji: "集まります", hanviet: "TẬP", romaji: "atsumarimasu", vi: "Tập hợp (người)" },
+                { jp: "わかれます", kanji: "別れます", hanviet: "BIỆT", romaji: "wakaremasu", vi: "Chia tay" }
+            ],
+            48: [
+                { jp: "おろします", kanji: "降ろします", hanviet: "HÀ", romaji: "oroshimasu", vi: "Cho xuống, dỡ xuống" },
+                { jp: "とどけます", kanji: " me届けます", hanviet: "GIỚI", romaji: "todokemasu", vi: "Gửi đến, đưa đến" },
+                { jp: "世話をします", kanji: "世話をします", hanviet: "THẾ THOẠI", romaji: "sewa o shimasu", vi: "Chăm sóc" },
+                { jp: "嫌がります", kanji: "嫌がります", hanviet: "HIỀM", romaji: "iyagarimasu", vi: "Tỏ ra ghét" },
+                { jp: "叱ります", kanji: "叱ります", hanviet: "SẤT", romaji: "shikarimasu", vi: "La mắng" }
+            ],
+            49: [
+                { jp: "つとめます", kanji: "勤めます", hanviet: "CẦN", romaji: "tsutomemasu", vi: "Làm việc tại (công ty)" },
+                { jp: "やすみます", kanji: "休みにします", hanviet: "HƯU", romaji: "yasumi ni shimasu", vi: "Xin nghỉ" },
+                { jp: "かけます", kanji: " me掛けます", hanviet: "QUẢI", romaji: "kakemasu", vi: "Ngồi xuống (ghế)" },
+                { jp: "すごします", kanji: "過ごします", hanviet: "QUÁ", romaji: "sugoshimasu", vi: "Trải qua (thời gian)" },
+                { jp: "寄ります", kanji: "寄ります", hanviet: "KÝ", romaji: "yorimasu", vi: "Ghé qua" }
+            ],
+            50: [
+                { jp: "まいります", kanji: "参ります", hanviet: "THAM", romaji: "mairimasu", vi: "Đến, đi (khiêm nhường ngữ)" },
+                { jp: "おります", kanji: "居ります", hanviet: "CƯ", romaji: "orimasu", vi: "Ở (khiêm nhường ngữ)" },
+                { jp: "いただきます", kanji: "いただきます", hanviet: "", romaji: "itadakimasu", vi: "Ăn, uống (khiêm nhường)" },
+                { jp: "もうします", kanji: "申します", hanviet: "THÂN", romaji: "moushimasu", vi: "Tên là, nói là" },
+                { jp: "いたします", kanji: "いたします", hanviet: "", romaji: "itashimasu", vi: "Làm (khiêm nhường)" },
+                { jp: "はいけんします", kanji: "拝見します", hanviet: "BÁI KIẾN", romaji: "haikenshimasu", vi: "Xem (khiêm nhường)" },
+                { jp: "存じます", kanji: "存じます", hanviet: "TỒN", romaji: "zonjimasu", vi: "Biết (khiêm nhường)" }
+            ]
+        };
+
+        // GRAMMAR SUMMARY FOR SAMPLE LESSONS
+        const GRAMMAR_DATABASE = {
+            1: [
+                { title: "1. A は B です", desc: "A là B.", example: "わたしは たなかです。(Tôi là Tanaka.)" },
+                { title: "2. A は B じゃありません / ではありません", desc: "A không phải là B.", example: "わたしは がくせいじゃありません。(Tôi không phải là học sinh.)" },
+                { title: "3. A は B ですか", desc: "A có phải là B không?", example: "あのひとは いしゃですか。(Người kia có phải bác sĩ không?)" },
+                { title: "4. A も B です", desc: "A cũng là B.", example: "ミラーさんは かいしゃいんです。わたしも かいしゃいんです。(Anh Miller là nhân viên công ty. Tôi cũng là nhân viên công ty.)" },
+                { title: "5. A の B", desc: "B của A (Thuộc sở hữu, thuộc tổ chức/trực thuộc).", example: "わたしは IMCの しゃいんです。(Tôi là nhân viên của công ty IMC.)" }
+            ],
+            2: [
+                { title: "1. これ/それ/あれ は N です", desc: "Cái này / cái đó / cái kia là N.", example: "これは ほんです。(Cái này là quyển sách.)" },
+                { title: "2. この/その/あの + N", desc: "[Danh từ] này / đó / kia (Bổ nghĩa cho danh từ đi kèm).", example: "この かぎは わたしのです。(Cái chìa khóa này là của tôi.)" },
+                { title: "3. そうです / そうじゃありません", desc: "Đúng vậy / Không phải vậy.", example: "「それは じしょですか。」「はい、そうです。」(「Cái đó là từ điển à?」「Vâng, đúng rồi.」)" },
+                { title: "4. S1 か、S2 か", desc: "Câu hỏi lựa chọn (Là S1 hay là S2?).", example: "これは 「９」ですか、「７」ですか。「９」です。(Cái này là số 9 hay số 7? Là số 9.)" },
+                { title: "5. N1 の N2", desc: "Danh từ 2 nói về/giải thích cho Danh từ 1.", example: "これは にほんごの ほんです。(Cái này là sách tiếng Nhật.)" },
+                { title: "6. そうですか", desc: "Ra thế / Thế à (Tiếp nhận thông tin mới).", example: "「この かさは あなたのですか。」「いいえ、ちがいます。」「そうですか。」(「Cái ô này là của bạn à?」「Không, không phải.」「Thế à.」)" }
+            ],
+            3: [
+                { title: "1. ここ / そこ / あそこ", desc: "Chỗ này / chỗ đó / chỗ kia.", example: "ここは きょうしつです。(Chỗ này là phòng học.)" },
+                { title: "2. こちら / そちら / あちら", desc: "Phía này / phía đó / phía kia (dạng lịch sự).", example: "エレベーターは こちらです。(Thang máy ở phía này.)" },
+                { title: "3. A は [Địa điểm] です", desc: "A ở [địa điểm].", example: "お手洗いは あそこです。(Nhà vệ sinh ở đằng kia.)" },
+                { title: "4. どこ / どちら", desc: "Ở đâu / Phía nào (Ở đâu lịch sự).", example: "じむしょは どちらですか。(Văn phòng ở đâu vậy ạ?)" },
+                { title: "5. [Đất nước/Công ty] の [Danh từ]", desc: "Sản phẩm của nước nào / công ty nào.", example: "これは にほんの じどうしゃです。(Đây là xe ô tô của Nhật Bản.)" },
+                { title: "6. おくに は どちらですか", desc: "Đất nước của bạn ở đâu? (Hỏi quê quán, quốc tịch lịch sự).", example: "「おくには どちらですか。」「ベトナムです。」(「Quê bạn ở đâu?」「Là Việt Nam.」)" }
+            ],
+            4: [
+                { title: "1. いま ～じ ～ふん（～ぷん）です", desc: "Bây giờ là ~ giờ ~ phút.", example: "いま しちじ はん（さんじゅうふん）です。(Bây giờ là 7 giờ rưỡi.)" },
+                { title: "2. Vます / Vました / Vません / Vませんでした", desc: "Khẳng định / Quá khứ / Phủ định / Phủ định quá khứ của động từ.", example: "まいあさ ６じに おきます。けさ ６じに おきました。(Mỗi sáng tôi dậy lúc 6h. Sáng nay tôi đã dậy lúc 6h.)" },
+                { title: "3. [Thời gian] に V", desc: "Làm gì vào lúc mấy giờ (Thời gian có con số cụ thể).", example: "わたしは まいにち ６じはんに おきます。(Hàng ngày tôi dậy lúc 6 giờ rưỡi.)" },
+                { title: "4. [Danh từ 1] から [Danh từ 2] まで", desc: "Từ ~ đến ~ (Thời gian hoặc địa điểm).", example: "９じから ５じまで はたらきます。(Tôi làm việc từ 9 giờ đến 5 giờ.)" },
+                { title: "5. S1 と S2", desc: "và (Liệt kê danh từ).", example: "ぎんこうの やすみは どようびと にちようびです。(Ngày nghỉ của ngân hàng là thứ Bảy và Chủ Nhật.)" },
+                { title: "6. ね (Trợ từ cuối câu)", desc: "Nhỉ, nhé (Tìm sự đồng cảm hoặc xác nhận).", example: "まいにち ９じまで はたらきます。たいへんですね。(Hàng ngày làm việc đến 9h. Vất vả nhỉ.)" }
+            ],
+            5: [
+                { title: "1. [Địa điểm] へ いきます / きます / かえります", desc: "Đi / Đến / Về đâu đó.", example: "わたしは にほんへ いきます。(Tôi đi Nhật Bản.)" },
+                { title: "2. どこ［へ］も いきません / も いきませんでした", desc: "Không đi đâu cả / Đã không đi đâu cả.", example: "どこへも いきませんでした。(Tôi đã không đi đâu cả.)" },
+                { title: "3. [Phương tiện] で いきます / きます / かえります", desc: "Đi / Đến / Về bằng phương tiện gì (Hỏi: なんで / Đi bộ: あるいて).", example: "でんしゃで いきます。あるいて いきます。(Đi bằng tàu điện. Đi bộ đi.)" },
+                { title: "4. [Người/Động vật] と V", desc: "Làm gì cùng ai.", example: "かぞくと にほんへ きました。(Tôi đã đến Nhật Bản cùng gia đình.)" },
+                { title: "5. いつ Vますか", desc: "Khi nào làm gì?", example: "いつ にほんへ いきますか。(Khi nào bạn sẽ đi Nhật Bản?)" }
+            ],
+            6: [
+                { title: "1. [Danh từ] を V (Tha động từ)", desc: "Làm / Tác động cái gì.", example: "ジュースを のみます。(Tôi uống nước trái cây.)" },
+                { title: "2. なに を しますか / なん を", desc: "Làm cái gì? (Cách dùng なに và なん).", example: "なんの ほんを よみますか。(Bạn đọc sách gì?)" },
+                { title: "3. [Địa điểm] で V", desc: "Làm gì ở đâu (Nơi diễn ra hành động).", example: "えきで ほんを かいました。(Tôi đã mua sách ở nhà ga.)" },
+                { title: "4. V ませんか", desc: "Cùng làm ... với tôi không? (Lời mời, rủ rê lịch sự).", example: "いっしょに ひるごはんを たべませんか。(Cùng ăn cơm trưa với tôi không?)" },
+                { title: "5. V ましょう", desc: "Cùng làm ... nhé (Lời hô hào, đồng ý, rủ rê chủ quan).", example: "ちょっと やすみましょう。(Nghỉ ngơi một chút nào.)" },
+                { title: "6. S は từ để hỏi も Vません", desc: "S hoàn toàn không làm V.", example: "なにも たべませんでした。(Tôi đã không ăn gì cả.)" }
+            ],
+            7: [
+                { title: "1. [Công cụ/Ngôn ngữ] で V", desc: "Làm gì bằng công cụ / ngôn ngữ gì.", example: "はしで たべます。にほんごで レポートを かきます。(Ăn bằng đũa. Viết báo cáo bằng tiếng Nhật.)" },
+                { title: "2. 「Từ/Câu」 は [Ngôn ngữ] で なんですか", desc: "\"Từ/Câu\" trong [Ngôn ngữ] là gì?", example: "「Arigatou」は べとなむごで なんですか。「Cam on」です。(「Arigatou」tiếng Việt là gì? Là 「Cam on」.)" },
+                { title: "3. [Người] に [Vật] を あげます / かします / おしえます", desc: "Cho / Cho mượn / Dạy ai cái gì.", example: "わたしは やまださんに はなを あげました。(Tôi đã tặng hoa cho anh Yamada.)" },
+                { title: "4. [Người] に/から [Vật] を もらいます / かります / ならいます", desc: "Nhận / Mượn / Học từ ai cái gì.", example: "カリナさんに ほんを かりました。(Tôi đã mượn sách từ chị Karina.)" },
+                { title: "5. もう Vました", desc: "Đã làm gì rồi.", example: "もう ひるごはんを たべました。(Tôi đã ăn cơm trưa rồi.)" },
+                { title: "6. まだ Vていません (Hoặc まだです)", desc: "Vẫn chưa làm.", example: "「もう レポートを おくりましたか。」「いいえ、まだです。」(「Bạn đã gửi báo cáo chưa?」「Chưa, tôi vẫn chưa gửi.」)" }
+            ],
+            8: [
+                { title: "1. Tính từ đuôi い / Tính từ đuôi な (Bỏ な) + です", desc: "Câu khẳng định tính từ thì hiện tại.", example: "ふじさんは たかいです。サントスさんは げんきです。(Núi Phú Sĩ cao. Anh Santos khỏe mạnh.)" },
+                { title: "2. Tính từ đuôi い (Bỏ い) + くないです", desc: "Phủ định tính từ đuôi い.", example: "この ほんは おもしろくないです。(Quyển sách này không hay.)" },
+                { title: "3. Tính từ đuôi な (Bỏ な) + じゃありません", desc: "Phủ định tính từ đuôi な.", example: "ここは しずかじゃありません。(Ở đây không yên tĩnh.)" },
+                { title: "4. [Aい] + [N] hoặc [A な + な] + [N]", desc: "Bổ nghĩa cho danh từ.", example: "たかい たてもの。しずかな まち。(Tòa nhà cao. Thành phố yên tĩnh.)" },
+                { title: "5. あまり + Tính từ (thể phủ định)", desc: "Không... lắm.", example: "ここは あまり ふべんじゃありません。(Ở đây không bất tiện lắm.)" },
+                { title: "6. [Danh từ] は どうですか", desc: "[Danh từ] thì như thế nào?", example: "にほんの せいかつは どうですか。(Cuộc sống ở Nhật Bản như thế nào?)" },
+                { title: "7. [Danh từ 1] は どんな [Danh từ 2] ですか", desc: "D1 là D2 như thế nào?", example: "ハノイは どんな まちですか。(Hà Nội là thành phố như thế nào?)" },
+                { title: "8. S1 が、S2", desc: "S1 nhưng S2 (Nối câu tương phản).", example: "にほんの たべものは おいしいですが、たかいです。(Thức ăn Nhật Bản ngon nhưng đắt.)" },
+                { title: "9. どれ", desc: "Cái nào (Trong số nhiều cái từ 3 cái trở lên).", example: "ミラーさんの かさは どれですか。(Ô của anh Miller là cái nào?)" }
+            ],
+            9: [
+                { title: "1. [Danh từ] が あります / わかります", desc: "Có cái gì / Hiểu cái gì.", example: "わたしは にほんごが わかります。(Tôi hiểu tiếng Nhật.)" },
+                { title: "2. [Danh từ] が すきです / きらいです / じょうずです / へたです", desc: "Thích / Ghét / Giỏi / Kém cái gì.", example: "わたしは スポーツが すきです。(Tôi thích thể thao.)" },
+                { title: "3. どんな [Danh từ] が すきですか", desc: "Thích loại danh từ như thế nào?", example: "どんな ドリンクが すきですか。(Bạn thích loại đồ uống nào?)" },
+                { title: "4. Phó từ chỉ mức độ đi với khẳng định", desc: "よく / だいたい / たくさん / すこし.", example: "えいごが よく わかります。(Tôi hiểu rất rõ tiếng Anh.)" },
+                { title: "5. Phó từ chỉ mức độ đi với phủ định", desc: "あまり / ぜんぜん.", example: "にほんごが ぜんぜん わかりません。(Tôi hoàn toàn không hiểu tiếng Nhật.)" },
+                { title: "6. S1 から、S2", desc: "Vì S1 nên S2 (Chỉ nguyên nhân).", example: "じかんが ありませんから、しんぶんを よみません。(Vì không có thời gian nên tôi không đọc báo.)" },
+                { title: "7. どうして", desc: "Tại sao? (Trả lời kết thúc bằng ～から).", example: "「どうして きのう はやく かえりましたか。」「ようじが あったからです。」(「Tại sao hôm qua bạn về sớm?」「Vì tôi có việc bận.」)" }
+            ],
+            10: [
+                { title: "1. [Địa điểm] に [Vật] が あります", desc: "Ở [địa điểm] có [vật] (Vật vô tri, cây cối).", example: "へやに テレビが あります。(Trong phòng có tivi.)" },
+                { title: "2. [Địa điểm] に [Người/Động vật] が います", desc: "Ở [địa điểm] có [người/động vật].", example: "にわに いぬが います。(Trong sân có con chó.)" },
+                { title: "3. [Vật/Người] は [Địa điểm] に あります / います", desc: "[Vật/Người] thì ở [địa điểm].", example: "ミラーさんは じむしょに います。(Anh Miller ở trong văn phòng.)" },
+                { title: "4. [Danh từ 1] の [Danh từ vị trí]", desc: "Vị trí của Danh từ 1 (Trên, dưới, trong, ngoài, giữa, phải, trái...).", example: "つくえの うえに ほんが あります。(Trên bàn có quyển sách.)" },
+                { title: "5. A と B / A や B など", desc: "と là liệt kê toàn bộ, や...など là liệt kê tiêu biểu.", example: "はこの なかに てがみや しゃしんなどが あります。(Trong hộp có thư, ảnh...)" }
+            ],
+            11: [
+                { title: "1. Cách đếm số lượng", desc: "Số đếm từ / số người / số tầng / số lần...", example: "みかんを ひとつ かいました。(Tôi đã mua 1 quả quýt.)" },
+                { title: "2. N + Trợ từ (が/を) + lượng từ + V", desc: "Có hoặc làm V với số lượng N (Vị trí: Đứng trước động từ, sau trợ từ を, が).", example: "りんごを よんつ かいました。(Tôi đã mua 4 quả táo.)" },
+                { title: "3. [Thời gian] に [Số lần] V", desc: "Làm bao nhiêu lần trong khoảng thời gian bao lâu.", example: "いっしゅうかんに ２かい えいがを みます。(Một tuần tôi xem phim 2 lần.)" },
+                { title: "4. [Thời gian/Khoảng cách] かかります", desc: "Mất bao lâu / tốn bao nhiêu tiền.", example: "うちから かいしゃまで でんしゃで １じかん かかります。(Từ nhà đến công ty đi tàu điện mất 1 tiếng.)" },
+                { title: "5. ～だけ", desc: "Chỉ (Dùng sau danh từ hoặc số lượng).", example: "やすみは にちようびだけです。(Ngày nghỉ chỉ có Chủ Nhật.)" }
+            ],
+            12: [
+                { title: "1. A は B より [Tính từ] です", desc: "A thì [Tính từ] hơn B (So sánh hơn).", example: "この つくえは その つくえより おおきいです。(Cái bàn này to hơn cái bàn đó.)" },
+                { title: "2. A と B と どちら が [A] ですか", desc: "A và B cái nào [Tính từ] hơn?", example: "「サッカーと やきゅうと どちらが おもしろいですか。」「サッカーの ほうが おもしろいです。」(「Bóng đá và bóng chày cái nào hay hơn?」「Bóng đá hay hơn.」)" },
+                { title: "3. [Phạm vi] で なん／どこ／だれ／いつ が いちばん [Tính từ] ですか", desc: "Trong [phạm vi], cái gì/ở đâu/ai/khi nào là [tính từ] nhất?", example: "いちねんで いつが いちばん さむいですか。２がつが いちばん さむいです。(Trong 1 năm khi nào lạnh nhất? Tháng 2 lạnh nhất.)" },
+                { title: "4. N はでうでしたか", desc: "N đã như thế nào ?", example: "きのうのしけんは どうでしたか。(Bài thi ngày hôm qua như thế nào?)" },
+                {
+                    title: "6. Bảng chia thì của Tính từ và Danh từ",
+                    desc: `<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+  <thead>
+    <tr>
+      <th>Loại TT / ĐT</th>
+      <th>HT/TL KĐ</th>
+      <th>HT/TL PĐ</th>
+      <th>QK KĐ</th>
+      <th>QK PĐ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><b>Đuôi い</b></td><td>A い です</td><td>Bỏ い ～ くないです</td><td>Bỏ い～かったです</td><td>Bỏ い～くなかったです</td></tr>
+    <tr><td><b>Đuôi な</b></td><td>Bỏ な～です</td><td>Bỏ な～じゃありません</td><td>Bỏ な～でした</td><td>Bỏ な～じゃありませんでした</td></tr>
+    <tr><td><b>いい (Tốt)</b></td><td>いいです</td><td>よくないです</td><td>よかったです</td><td>よくなかったです</td></tr>
+  </tbody>
+</table>`,
+                    example: "きのうの てんきは よかったです。(Thời tiết hôm qua tốt.)"
+                }
+            ],
+            13: [
+                { title: "1. [Danh từ] が ほしいです", desc: "Muốn có cái gì.", example: "わたしは あたらしい くるまが ほしいです。(Tôi muốn có một chiếc xe ô tô mới.)" },
+                { title: "2. V たいです", desc: "Muốn làm gì (Bỏ ます thêm たいです).", example: "わたしは おきなわへ いきたいです。(Tôi muốn đi Okinawa.)" },
+                { title: "3. [Địa điểm] へ [V (bỏ ます) / Danh động từ] に いきます / きます / かえります", desc: "Đi / Đến / Về đâu để làm gì (Mục đích chuyến đi).", example: "デパートへ かいものに いきます。(Tôi đi đến bách hóa để mua sắm.)" },
+                { title: "4. どこか / なにか", desc: "Một nơi nào đó / Một cái gì đó (Dùng trong câu khẳng định/nghi vấn).", example: "どこかへ いきましたか。なにか たべたいです。(Bạn có đi đâu đó không? Tôi muốn ăn cái gì đó.)" },
+            ],
+            14: [
+                {
+                    title: "1. Phân loại Động từ (Gồm 3 nhóm)",
+                    desc: "• Nhóm I: Trước ます kết thúc bằng âm thuộc cột い. <br> • Nhóm II: Trước ます kết thúc bằng âm thuộc cột え, hoặc các động từ thuộc hàng じ, các động từ 1 âm tiết và động từ đặc biệt. <br>• Nhóm III: きます (đến), します (làm), [Danh từ] します.",
+                    example: "かい(い)ます (Nhóm I), たべ(え)ます (Nhóm II), べんきょうします (Nhóm III)."
+                },
+                {
+                    title: "2. Quy tắc chia Động từ thể て (Vて) Hãy ~",
+                    desc: "• Nhóm I:<br>- い,ち,り → って <br>- み,に,び → んで <br>- き/ぎ → いて/いで (いき → いって) <br>- し → して <br>• Nhóm II & III: Bỏ ます thêm て",
+                    example: "かいます → かって, のみます → のんで, ききます → きいて, たべます → たべて."
+                },
+                { title: "3. V て ください", desc: "Hãy làm gì (Nhờ vả, yêu cầu lịch sự).", example: "すみませんが、ちょっと てつだってください。(Xin lỗi, hãy giúp tôi một chút.)" },
+                { title: "4. V て います", desc: "Đang làm gì (Hành động đang diễn ra).", example: "ミラーさんは いま でんわを かけて います。(Anh Miller bây giờ đang gọi điện thoại.)" },
+                { title: "5. V ましょうか", desc: "Tôi làm ... giúp bạn nhé? (Đề nghị giúp đỡ).", example: "かさを かしましょうか。(Tôi cho bạn mượn ô nhé?)" },
+                {
+                    title: "6. Bảng động từ đặc biệt",
+                    desc: `<table border="1" style="border-collapse: collapse; width: 100%; text-align: left; margin-top: 8px;">
+            <tbody>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>おきます</b> : thức dậy</td>
+                    <td style="padding: 6px 10px;"><b>できます</b> : có thể</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>みます</b> : nhìn</td>
+                    <td style="padding: 6px 10px;"><b>しんじます</b> : tin tưởng</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>おります</b> : xuống</td>
+                    <td style="padding: 6px 10px;"><b>かります</b> : mượn</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>います</b> : có</td>
+                    <td style="padding: 6px 10px;"><b>きます</b> : mặc</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>あびます</b> : tắm</td>
+                    <td style="padding: 6px 10px;"><b>たります</b> : đủ</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px 10px;"><b>おちます</b> : rơi</td>
+                    <td style="padding: 6px 10px;"></td>
+                </tr>
+            </tbody>
+        </table>`,
+                    example: "Các động từ tuy có âm đuôi thuộc cột い trước ます nhưng thuộc Nhóm II."
+                }
+            ],
+            15: [
+                { title: "1. V ても いいです / V ても いいですか", desc: "Cho phép được làm V / Tôi làm V có được không?", example: "しゃしんを とっても いいですか。(Tôi chụp ảnh có được không?)" },
+                { title: "2. V ては いけません", desc: "Không được làm V... (Cấm đoán).", example: "ここで たばこを すっては いけません。(Không được hút thuốc ở đây.)" },
+                { title: "3. V て います (Trạng thái)", desc: "Diễn tả trạng thái kết quả kéo dài (Sống ở đâu, kết hôn, biết thông tin - しっています, sở hữu).", example: "わたしは ハノイに すんでいます。(Tôi đang sống ở Hà Nội.)" },
+                { title: "4. N(địa điểm) に N(vật/người) を V", desc: "Đi vào một địa điểm, lên một phương tiện nào đó.", example: "ここに くるまを とめてください。(Hãy đỗ xe ở chỗ này.)" }
+            ],
+            16: [
+                { title: "1. V1 て、V2 て、... [V3]", desc: "Làm V1 sau đó làm V2, V cuối quyết định thì và thể của câu.", example: "あさ おきて、シャワーを あびて、かいしゃへ いきます。(Sáng thức dậy, tắm vòi sen, rồi đi đến công ty.)" },
+                { title: "2. Nối câu Tính từ & Danh từ", desc: "• Tính từ đuôi い: Bỏ い thêm くて<br>• Tính từ đuôi な: Bỏ な Thêm で<br>• Danh từ: N + で", example: "ミラーさんは わかくて、げんきです。ならは しずかで、きれいな まちです。(Anh Miller trẻ và khỏe mạnh. Nara là thành phố yên tĩnh và đẹp.)" },
+                { title: "3. V1 てから、V2", desc: "Sau khi làm V1 thì làm V2 (Nhấn mạnh sự liên tục).", example: "くにへ かえってから、ちちの かいしゃで はたらきます。(Sau khi về nước, tôi sẽ làm việc ở công ty của bố.)" },
+                { title: "4. A は B が [Tính từ] です", desc: "A có bộ phận B thì [Tính từ] (Ví dụ: tóc dài, mắt to).", example: "マリアさんは かみが ながいです。(Chị Maria có mái tóc dài.)" },
+                { title: "5. N(địa điểm) / N(phương tiện) を Vます", desc: "Ra khỏi địa điểm, xuống khỏi phương tiện.", example: "７じに うちを でます。でんしゃを おります。(Rời khỏi nhà lúc 7 giờ. Xuống khỏi tàu điện.)" }
+            ],
+            17: [
+                { title: "1. Quy tắc chia Động từ sang thể ない (Vない) - Không làm V", desc: "• Nhóm I: Cột い Chuyển thành Cột あ + ない <br>(Đặc biệt: い Chuyển thành わ + ない | あります Chuyển thành ない)<br>• Nhóm II: Bỏ ます + ない<br>• Nhóm III: きます Chuyển thành こない | します Chuyển thành しない | [N]します Chuyển thành [N]しない", example: "いきます thành いかない, いいます thành いわない, たべます thành たべない, きます thành こない." },
+                { title: "2. V ない で ください", desc: "Xin đừng làm V.", example: "わたしは げんきですから、しんぱいしないで ください。(Tôi khỏe nên xin đừng lo lắng.)" },
+                { title: "3. V なければ なりません", desc: "Phải làm ... (Bắt buộc, nghĩa vụ).", example: "くすりを のまなければ なりません。(Tôi phải uống thuốc.)" },
+                { title: "4. V なくても いいです", desc: "Không cần làm ... cũng được.", example: "あしたは こなくても いいです。(Ngày mai không cần đến cũng được.)" },
+                { title: "5. Mốc thời gian + までに", desc: "Hạn chót là...", example: "どようびまでに ほんを かえさなければ なりません。(Phải trả sách trước thứ Bảy.)" }
+            ],
+            18: [
+                { title: "1. Quy tắc chia Động từ sang thể Từ điển (Vる)", desc: "• Nhóm I: Cột い Chuyển thành Cột う (Bỏ ます)<br>• Nhóm II: Bỏ ます + る<br>• Nhóm III: きます Chuyển thành くる | します Chuyển thành する | [N]します chuyển thành [N]する", example: "かきます thành かく, すいます thành すう, たべます thành たべる, きます thành くる." },
+                { title: "2. S は N / Vる こと が できます", desc: "Có thể làm gì (Khả năng/Điều kiện cho phép).", example: "ミラーさんは にほんごが できます。カードで はらう ことが できます。(Anh Miller có thể nói tiếng Nhật. Có thể thanh toán bằng thẻ.)" },
+                { title: "3. わたし の しゅみ は [Vること / Danh từ] です", desc: "Sở thích của tôi là...", example: "わたしの しゅみは おんがくを きくことです。(Sở thích của tôi là nghe nhạc.)" },
+                { title: "4. [Vる / Danh từ の / Khoảng thời gian] まえに、V2", desc: "Trước khi làm V thì làm V2.", example: "ねる まえに、ほんを よみます。しょくじの まえに、てを あらいます。(Trước khi đi ngủ tôi đọc sách. Trước bữa ăn tôi rửa tay.)" },
+                { title: "5. なかなか Vません / なかなか Vる こと が できません", desc: "Mãi mà không V / Khó có thể làm V.", example: "にほんでは なかなか うまを みる ことが できません。(Ở Nhật Bản mãi mà không thể nhìn thấy ngựa.)" },
+                { title: "6. ぜひ 〜 Vたい / Vて ください", desc: "Nhất định, thế nào cũng phải...", example: "ぜひ ほっかいどうへ いきたいです。(Tôi nhất định muốn đi Hokkaido.)" }
+            ],
+            19: [
+                { title: "1. Quy tắc chia Động từ sang thể Ta (Vた) - Đã làm V", desc: "Cách chia hoàn toàn giống thể て (Vて), chỉ cần thay て bằng た, thay で bằng だ.", example: "かいます thành かった, のみます thành のんだ, たべます thành たべた, きます thành きた." },
+                { title: "2. V た こと が あります / ありません / ありますか", desc: "Đã từng / Chưa từng / Đã từng làm V chưa? (Kinh nghiệm trong quá khứ).", example: "わたしは うまに のった ことが あります。(Tôi đã từng cưỡi ngựa.)" },
+                { title: "3. Vたり、Vたり します", desc: "Lúc thì làm V1, lúc thì làm V2 (Liệt kê hành động không theo thứ tự thời gian).", example: "にちようび テニスを したり、えいがを みたり します。(Chủ Nhật lúc thì tôi chơi tennis, lúc thì xem phim.)" },
+                { title: "4. Tính từ đuôi い / Tính từ đuôi な / Danh từ + なります", desc: "Trở nên, trở thành...<br>• Tính từ đuôi い: Bỏ い + く なります<br>• Tính từ đuôi な: Bỏ な / Danh từ: + に なります", example: "さむくなります (Lạnh lên). げんきに なります (Khỏe ra). なつやすみに なります (Đến kỳ nghỉ hè)." }
+            ],
+            20: [
+                {
+                    title: "1. Quy tắc giao tiếp thể thông thường (Thể ngắn)",
+                    desc: "• Lược bỏ các trợ từ: を、へ、は、가.<br>• Không được lược bỏ: で、に、から、まで、と.",
+                    example: "「あした おおさかへ いく？」「うん、いく。」(「Ngày mai đi Osaka không?」「Ừ, đi chứ.」)"
+                },
+                {
+                    title: "2. Bảng chuyển đổi Thể lịch sự sang Thể thông thường",
+                    desc: `<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+      <thead>
+        <tr>
+          <th>Thể lịch sự (ます / です)</th>
+          <th>Thể thông thường</th>
+          <th>Ví dụ lịch sự</th>
+          <th>Ví dụ thông thường</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><b>V ます</b></td><td><b>V る</b></td><td>いきます</td><td>いく</td></tr>
+        <tr><td><b>V ません</b></td><td><b>V ない</b></td><td>いきません</td><td>いかない</td></tr>
+        <tr><td><b>V ました</b></td><td><b>V た</b></td><td>いきました</td><td>いった</td></tr>
+        <tr><td><b>V ませんでした</b></td><td><b>V なかった</b></td><td>いきませんでした</td><td>いかなかった</td></tr>
+        <tr><td><b>A い です</b></td><td><b>A い (Bỏ です)</b></td><td>おもしろいです</td><td>おもしろい</td></tr>
+        <tr><td><b>A くない です</b></td><td><b>A くない (Bỏ です)</b></td><td>おもしろくないです</td><td>おもしろくない</td></tr>
+        <tr><td><b>A かった です</b></td><td><b>A かった (Bỏ です)</b></td><td>おもしろかったです</td><td>おもしろかった</td></tr>
+        <tr><td><b>A くなかった です</b></td><td><b>A くなかった (Bỏ です)</b></td><td>おもしろくなかったです</td><td>おもしろくなかった</td></tr>
+        <tr><td><b>A な です</b></td><td><b>A だ</b></td><td>きれいです</td><td>きれいだ</td></tr>
+        <tr><td><b>A な じゃありません</b></td><td><b>A じゃない</b></td><td>きれいじゃありません</td><td>きれいじゃない</td></tr>
+        <tr><td><b>A な でした</b></td><td><b>A だった</b></td><td>きれいでした</td><td>きれいだった</td></tr>
+        <tr><td><b>A な じゃありませんでした</b></td><td><b>A じゃないかった</b></td><td>きれいじゃありませんでした</td><td>きれいじゃなかった</td></tr>
+        <tr><td><b>N (Danh từ)</b></td><td><i>Chia giống tính từ đuôi な</i></td><td>あめです</td><td>あめだ</td></tr>
+      </tbody>
+    </table>`,
+                    example: "いきます → いく, おもしろいです → おもしろい, きれいです → きれいだ, あめです → あめだ."
+                }
+            ],
+            21: [
+                { title: "1. [Thể thông thường] と おもいます", desc: "Tôi nghĩ rằng... (Bày tỏ ý kiến cá nhân).", example: "あした あめが ふると おもいます。(Tôi nghĩ ngày mai trời sẽ mưa.)" },
+                { title: "2. 「Câu nói」 / [Thể thông thường] と いいました", desc: "Ai đó đã nói rằng... (Trích dẫn lời nói).", example: "ねる まえに、「おやすみなさい」と いいます。(Trước khi đi ngủ thì nói \"Chúc ngủ ngon\".)" },
+                { title: "3. [Thể thông thường] でしょう", desc: "...đúng không / có đúng không nhỉ? (Tìm sự xác nhận từ người nghe khi người nói khá chắc chắn).", example: "あした パーティーに いくでしょう。(Ngày mai bạn sẽ đi dự buổi tiệc đúng không?)" },
+                { title: "4. [Địa điểm] で [Sự kiện] が あります", desc: "Ở [địa điểm] diễn ra/tổ chức [sự kiện, lễ hội, tai nạn...].", example: "とうきょうで おまつりが あります。(Ở Tokyo có lễ hội.)" },
+                { title: "5. V ない と", desc: "Phải làm V (Dạng rút gọn của V なければ なりません trong văn nói).", example: "もう かえらないと... (Tôi phải về rồi...)" }
+            ],
+            22: [
+                { title: "1. Bổ ngữ cho Danh từ bằng Động từ / Cụm động từ", desc: "Sử dụng Động từ thể thông thường đứng trước Danh từ để giải thích, làm rõ nghĩa cho Danh từ đó. (Chủ ngữ trong cụm bổ nghĩa này đi với trợ từ が thay vì は).", example: "これは わたしが きのう とった しゃしんです。(Đây là bức ảnh mà tôi đã chụp ngày hôm qua.)" },
+                { title: "2. Lồng cụm Danh từ bổ nghĩa vào câu cơ bản", desc: "[Cụm động từ bổ nghĩa + Danh từ] + は/を/に... です/します", example: "あそこで ほんを よんで いる ひと は ミラーさんです。(Người đang đọc sách đằng kia là anh Miller.)" },
+                { title: "3. V ましょうか", desc: "Chúng ta hãy cùng làm... nhé (Lời rủ rê thân mật).", example: "いっしょに おちゃを のみましょうか。(Chúng ta cùng uống trà nhé?)" }
+            ],
+            23: [
+                { title: "1. [Vる / Vない / Vた / Tính từ / Danh từ の] とき、...", desc: "Khi..., lúc...", example: "としょかんで ほんを かりる とき、カードが いります。(Khi mượn sách ở thư viện thì cần có thẻ.)" },
+                { title: "2. V る と、...", desc: "Hễ mà / Nếu mà làm V thì... (Hành động dẫn đến kết quả tất yếu, tự nhiên hoặc dùng khi hướng dẫn đường đi).", example: "この ボタンを おすと、おつりが でます。(Hễ bấm nút này thì tiền thừa sẽ chảy ra.)" }
+            ],
+            24: [
+                { title: "1. [Người khác] が 私に [Vật] を くれます", desc: "Ai đó cho / tặng tôi (hoặc người nhà của tôi) cái gì.", example: "さとうさんは わたしに はなを くれました。(Chị Sato đã tặng hoa cho tôi.)" },
+                { title: "2. V て あげます", desc: "Làm việc gì đó cho ai (Mang tính ban ơn, giúp đỡ hoặc lịch sự).", example: "わたしは たろうくんに ほんを かして あげました。(Tôi đã cho bé Taro mượn sách.)" },
+                { title: "3. V て もらいます", desc: "Được ai đó làm gì cho / Nhờ ai làm gì cho.", example: "わたしは すずきさんに にほんごを おしえて もらいました。(Tôi được cô Suzuki dạy tiếng Nhật cho.)" },
+                { title: "4. V て くれます", desc: "Ai đó làm gì cho tôi (hoặc người nhà của tôi).", example: "かないは わたしに あさごはんを つくって くれました。(Vợ tôi đã nấu bữa sáng cho tôi.)" }
+            ],
+            25: [
+                { title: "1. [Vた / Tính từ, Danh từ chia quá khứ] + ら、...", desc: "Nếu... / Sau khi... (Giả định hoặc điều kiện chắc chắn xảy ra trong tương lai).", example: "あめが ふったら、でかけません。(Nếu trời mưa thì tôi không đi ra ngoài.)" },
+                { title: "2. V て / A(い) くて / Tính từ đuôi(な) で / N で + も、...", desc: "Dù... / Mặc dù... đi chăng nữa.", example: "あめが ふっても、サッカーを します。(Dù trời mưa đi chăng nữa tôi vẫn chơi bóng đá.)" },
+                { title: "3. V ない chuyển thành　なくても", desc: "Dù không làm V đi chăng nữa...", example: "やすからなくても かいます。(Dù không rẻ đi chăng nữa tôi vẫn sẽ mua.)" }
+            ], 
+            26: [
+                { title: "1. V/A/N (thể thông thường) + んです", desc: "Dùng để giải thích lý do, nguyên nhân hoặc nhấn mạnh.", example: "あたまが いたいんです。(Tại vì tôi bị đau đầu.)" },
+                { title: "2. V-ていただけませんか", desc: "Yêu cầu lịch sự: Anh/chị làm ơn... giúp tôi được không?", example: "日本語を おしえていただけませんか。(Anh làm ơn dạy tiếng Nhật cho tôi được không?)" }
+            ],
+            45: [
+                { title: "1. Khiêm nhường ngữ (謙譲語)", desc: "Dùng hạ thấp hành động của bản thân để thể hiện sự kính trọng với đối phương.", example: "わたしは まいります。(Tôi sẽ đến - Khiêm nhường)." }
+            ]
+        };
+
+        // QUIZ SAMPLE DATABASE
+        const QUIZ_DATABASE = {
+            1: [
+                { q: "Từ nào có nghĩa là 'Bác sĩ'?", options: ["がくせい", "いしゃ", "かいしゃいん", "せんせい"], answer: 1, explanation: "いしゃ (医者) nghĩa là Bác sĩ." },
+                { q: "Điền từ thích hợp: わたし___ たなかです。", options: ["は", "が", "に", "を"], answer: 0, explanation: "Chủ ngữ đi với trợ từ 'は'." }
+            ],
+            26: [
+                { q: "Cấu trúc dùng để yêu cầu giúp đỡ lịch sự nhất là gì?", options: ["V-てください", "V-ていただけませんか", "V-てくださいませんか", "V-てもいいですか"], answer: 1, explanation: "V-ていただけませんか là lịch sự nhất." }
+            ]
+        };
+
+        let currentLevel = 'N5';
+        let currentLesson = 1;
+        let activeTab = 'vocab';
+        let columnVisibility = {
+            hiragana: true,
+            kanji: true,
+            meaning: true
+        };
+        let quizScore = 0;
+
+        function switchLevel(level) {
+            currentLevel = level;
+            document.getElementById('btn-level-n5').className = level === 'N5'
+                ? 'px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-jp-red text-white'
+                : 'px-5 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900';
+
+            document.getElementById('btn-level-n4').className = level === 'N4'
+                ? 'px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-jp-red text-white'
+                : 'px-5 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900';
+
+            document.getElementById('current-level-badge').innerText = level === 'N5' ? 'N5 (Bài 1 - 25)' : 'N4 (Bài 26 - 50)';
+
+            populateLessonDropdown();
+            currentLesson = level === 'N5' ? 1 : 26;
+            document.getElementById('lesson-select').value = currentLesson;
+            renderCurrentView();
+        }
+
+        function populateLessonDropdown() {
+            const select = document.getElementById('lesson-select');
+            select.innerHTML = '';
+
+            const start = currentLevel === 'N5' ? 1 : 26;
+            const end = currentLevel === 'N5' ? 25 : 50;
+
+            for (let i = start; i <= end; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `Bài ${i}`;
+                select.appendChild(opt);
+            }
+        }
+
+        function switchTab(tab) {
+            activeTab = tab;
+            ['vocab', 'grammar', 'quiz'].forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                const sec = document.getElementById(`section-${t}`);
+                if (t === tab) {
+                    btn.className = 'w-full flex items-center space-x-3 px-4 py-3 text-sm font-bold rounded-xl transition-all bg-jp-red text-white shadow-md shadow-red-100';
+                    sec.classList.remove('hidden');
+                } else {
+                    btn.className = 'w-full flex items-center space-x-3 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 rounded-xl transition-all';
+                    sec.classList.add('hidden');
+                }
+            });
+            renderCurrentView();
+        }
+
+        function onLessonChange(val) {
+            currentLesson = parseInt(val);
+            renderCurrentView();
+        }
+
+        function renderCurrentView() {
+            if (activeTab === 'vocab') renderVocabTable();
+            else if (activeTab === 'grammar') renderGrammar();
+            else if (activeTab === 'quiz') renderQuiz();
+        }
+
+        function renderVocabTable() {
+            document.getElementById('vocab-title').innerText = `Bài ${currentLesson}: Bảng Kiểm Tra Từ Vựng`;
+            const tbody = document.getElementById('excel-vocab-tbody');
+            tbody.innerHTML = '';
+
+            const words = VOCAB_DATABASE[currentLesson] || [];
+            document.getElementById('total-words-count').innerText = words.length;
+
+            if (words.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-medium">Đang cập nhật từ vựng cho bài này...</td></tr>`;
+                return;
+            }
+
+            words.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-100 transition-colors border-b border-slate-200';
+
+                tr.innerHTML = `
+                            <td class="py-3 px-3 border-r border-slate-200 font-bold text-slate-800 text-center col-hiragana ${columnVisibility.hiragana ? '' : 'hidden'}">${item.jp}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-center text-slate-700 col-kanji ${columnVisibility.kanji ? '' : 'hidden'}">${item.kanji || '-'}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-center text-slate-500 font-semibold col-kanji ${columnVisibility.kanji ? '' : 'hidden'}">${item.hanviet || '-'}</td>
+                            <td class="py-3 px-3 border-r border-slate-200 text-slate-700 font-medium col-meaning ${columnVisibility.meaning ? '' : 'hidden'}">${item.vi}</td>
+                            <td class="py-2 px-2 border-r border-slate-200 bg-slate-50/50">
+                                <input type="text" id="input-word-${idx}" onkeypress="handleVocabEnter(event, ${idx})"
+                                    class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                                    placeholder="Nhập tiếng Nhật..." />
+                            </td>
+                            <td class="py-2 px-3 text-center font-bold" id="check-result-${idx}">
+                                <span class="text-slate-400 text-xs font-normal">Chờ kiểm tra</span>
+                            </td>
+                        `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleVocabEnter(e, index) {
+            if (e.key === 'Enter') {
+                checkWordRow(index);
+            }
+        }
+
+        function checkWordRow(index) {
+            const input = document.getElementById(`input-word-${index}`);
+            const resultCell = document.getElementById(`check-result-${index}`);
+            const word = VOCAB_DATABASE[currentLesson][index];
+
+            if (!input || !word) return;
+
+            const userVal = input.value.trim().toLowerCase();
+            const correctJp = word.jp.trim().toLowerCase();
+            const correctKanji = (word.kanji || '').trim().toLowerCase();
+            const correctRomaji = (word.romaji || '').trim().toLowerCase();
+
+            if (!userVal) {
+                resultCell.innerHTML = `<span class="text-slate-400 text-xs font-normal">Chờ kiểm tra</span>`;
+                return;
+            }
+
+            if (userVal === correctJp || userVal === correctKanji || userVal === correctRomaji) {
+                resultCell.innerHTML = `<span class="inline-flex items-center text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 text-xs"><i class="fa-solid fa-circle-check mr-1"></i> Đúng</span>`;
+            } else {
+                resultCell.innerHTML = `<div class="text-left"><span class="inline-flex items-center text-red-600 font-bold bg-red-50 px-2.5 py-0.5 rounded-md border border-red-200 text-xs"><i class="fa-solid fa-circle-xmark mr-1"></i> Sai</span> <div class="text-[11px] text-red-500 font-semibold mt-0.5">Đáp án: ${word.jp}</div></div>`;
+            }
+        }
+
+        function checkAllVocab() {
+            const words = VOCAB_DATABASE[currentLesson] || [];
+            words.forEach((_, idx) => checkWordRow(idx));
+        }
+
+        function showAllAnswers() {
+            const words = VOCAB_DATABASE[currentLesson] || [];
+            words.forEach((item, idx) => {
+                const input = document.getElementById(`input-word-${idx}`);
+                if (input) input.value = item.jp;
+                checkWordRow(idx);
+            });
+        }
+
+        function resetVocabCheck() {
+            const words = VOCAB_DATABASE[currentLesson] || [];
+            words.forEach((_, idx) => {
+                const input = document.getElementById(`input-word-${idx}`);
+                const resultCell = document.getElementById(`check-result-${idx}`);
+                if (input) input.value = '';
+                if (resultCell) resultCell.innerHTML = `<span class="text-slate-400 text-xs font-normal">Chờ kiểm tra</span>`;
+            });
+        }
+
+        function toggleColumn(colName) {
+            columnVisibility[colName] = !columnVisibility[colName];
+
+            const btn = document.getElementById(`toggle-${colName}`);
+            if (columnVisibility[colName]) {
+                btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-800 text-white border-slate-800";
+            } else {
+                btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200";
+            }
+
+            document.querySelectorAll(`.col-${colName}`).forEach(el => {
+                if (columnVisibility[colName]) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+        }
+
+        function renderGrammar() {
+            document.getElementById('grammar-title').innerText = `Bài ${currentLesson}: Ngữ Pháp Minna no Nihongo`;
+            const container = document.getElementById('grammar-list-container');
+            container.innerHTML = '';
+
+            const list = GRAMMAR_DATABASE[currentLesson] || [
+                { title: `1. Cấu trúc ngữ pháp cơ bản Bài ${currentLesson}`, desc: "Đang cập nhật nội dung chi tiết ngữ pháp cho bài học này.", example: "Ví dụ minh họa chuẩn bị ra mắt." }
+            ];
+
+            list.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2";
+                card.innerHTML = `
+                            <h3 class="text-base font-extrabold text-jp-red flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-jp-red"></span>
+                                ${item.title}
+                            </h3>
+                            <p class="text-sm text-slate-600 font-medium pl-4 border-l-2 border-slate-200">${item.desc}</p>
+                            <div class="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-700 font-semibold">
+                                <span class="text-blue-600 font-bold">Ví dụ:</span> ${item.example}
+                            </div>
+                        `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderQuiz() {
+            document.getElementById('quiz-title').innerText = `Luyện Tập Bài ${currentLesson}`;
+            const container = document.getElementById('quiz-card-content');
+            container.innerHTML = '';
+
+            const questions = QUIZ_DATABASE[currentLesson] || [
+                { q: `Câu hỏi ôn tập từ vựng & ngữ pháp Bài ${currentLesson}?`, options: ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"], answer: 0, explanation: "Giải thích đáp án." }
+            ];
+
+            questions.forEach((q, qIdx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "mb-6 border-b border-slate-100 pb-5 last:border-0";
+
+                let optionsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                                <button onclick="handleAnswer(${qIdx}, ${optIdx}, ${q.answer})" id="q-${qIdx}-opt-${optIdx}"
+                                    class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition-all font-medium text-xs text-slate-700">
+                                    ${String.fromCharCode(65 + optIdx)}. ${opt}
+                                </button>
+                            `;
+                });
+
+                qDiv.innerHTML = `
+                            <div class="text-sm font-bold text-slate-800 mb-3">${qIdx + 1}. ${q.q}</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                ${optionsHtml}
+                            </div>
+                            <div id="quiz-explain-${qIdx}" class="hidden p-3 bg-slate-100 rounded-xl text-xs text-slate-600">
+                                <span class="font-bold text-blue-600">Giải thích:</span> ${q.explanation}
+                            </div>
+                        `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        function handleAnswer(qIdx, selectedOpt, correctOpt) {
+            const explainDiv = document.getElementById(`quiz-explain-${qIdx}`);
+            explainDiv.classList.remove('hidden');
+
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`q-${qIdx}-opt-${i}`);
+                if (!btn) continue;
+                btn.disabled = true;
+
+                if (i === correctOpt) {
+                    btn.className = "w-full text-left p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs text-emerald-800";
+                } else if (i === selectedOpt) {
+                    btn.className = "w-full text-left p-3 rounded-xl border-2 border-red-500 bg-red-50 font-bold text-xs text-red-800";
+                }
+            }
+
+            if (selectedOpt === correctOpt) {
+                quizScore += 10;
+                document.getElementById('quiz-score').innerText = quizScore;
+            }
+        }
+
+        window.onload = function () {
+            populateLessonDropdown();
+            renderCurrentView();
+        };
+    </script>
+</body>
+</html>
